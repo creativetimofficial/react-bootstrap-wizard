@@ -1,0 +1,44 @@
+{
+    "name": "react-wizard",
+    "version": "0.0.1",
+    "description": "A react component package that allows you to split a complicated flow or a complicated form in multiple steps.",
+    "main": "index.js",
+    "files": {
+        "license": "./LICENSE.md"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/creativetimofficial/react-wizard.git"
+    },
+    "keywords": [
+        "react",
+        "component",
+        "react-component",
+        "reactstrap",
+        "reactstrap-component",
+        "wizard",
+        "react-wizard",
+        "form",
+        "form-wizard",
+        "bootstrap",
+        "bootstrap4",
+        "webdesign",
+        "reactjs",
+        "responsive",
+        "bootstrap-wizard",
+        "bootstrap-form-wizard",
+        "reactstrap-wizard"
+    ],
+    "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+    "license": "SEE LICENSE IN license",
+    "bugs": {
+        "url": "https://github.com/creativetimofficial/react-wizard/issues"
+    },
+    "homepage": "https://github.com/creativetimofficial/react-wizard#readme"
+}
