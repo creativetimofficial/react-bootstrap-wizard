@@ -51,13 +51,25 @@ class ReactWizard extends React.Component{
     }
     navigationStepChange(key){
         if(this.props.navSteps){
-            this.setState({
-                currentStep: key,
-                nextButton: (this.props.steps.length > key + 1 ? true:false),
-                previousButton: (key > 0 ? true:false),
-                finishButton: (this.props.steps.length === key + 1 ? true:false)
-            });
-            this.refreshAnimation(key);
+            var validationState = true;
+            if(key > this.state.currentStep){
+                for(var i = this.state.currentStep ; i < key ; i++){
+                    if( this.refs[this.props.steps[i].stepName].isValidated !== undefined &&
+                        this.refs[this.props.steps[i].stepName].isValidated() === false){
+                        validationState = false;
+                        break;
+                    }
+                }
+            }
+            if(validationState){
+                this.setState({
+                    currentStep: key,
+                    nextButton: (this.props.steps.length > key + 1 ? true:false),
+                    previousButton: (key > 0 ? true:false),
+                    finishButton: (this.props.steps.length === key + 1 ? true:false)
+                });
+                this.refreshAnimation(key);
+            }
         }
     }
     nextButtonClick(){
