@@ -2,19 +2,29 @@
     "name": "react-wizard",
     "version": "0.0.1",
     "description": "A react component package that allows you to split a complicated flow or a complicated form in multiple steps.",
-    "main": "index.js",
+    "main": "dist/index.js",
     "files": {
         "license": "./LICENSE.md"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
+        "build": "mkdir -p dist && babel index.js -o dist/index.js"
+    },
+    "babel": {
+        "presets": [
+            "react",
+            "env",
+            "stage-0"
+        ]
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/creativetimofficial/react-wizard.git"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.18.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-0": "^6.16.0"
     },
     "keywords": [
         "react",

@@ -2,17 +2,52 @@ import React from 'react';
 import {
     Card, CardHeader, CardTitle, CardSubtitle, CardBody, CardFooter, Nav, NavItem, NavLink, TabContent, TabPane, Button
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class ReactWizard extends React.Component{
     constructor(props){
         super(props);
+        var width;
+        if(this.props.steps.length === 1){
+            width = '100%';
+        } else {
+            if(window.innerWidth < 600){
+                if(this.props.steps.length !== 3){
+                    width = '50%';
+                } else {
+                    width = 100/3 + '%';
+                }
+            } else {
+                if(this.props.steps.length === 2){
+                    width = '50%';
+                } else {
+                    width = 100/3 + '%';
+                }
+            }
+        }
         this.state = {
             currentStep: 0,
+            color: this.props.color !== undefined ? this.props.color:"primary",
             nextButton: (this.props.steps.length > 1 ? true:false),
             previousButton: false,
-            finishButton: (this.props.steps.length === 1 ? true:false)
+            finishButton: (this.props.steps.length === 1 ? true:false),
+            width: width,
+            movingTabStyle: {
+                transition: 'transform 0s'
+            }
         };
         this.navigationStepChange = this.navigationStepChange.bind(this);
+        this.refreshAnimation = this.refreshAnimation.bind(this);
+        this.previousButtonClick = this.previousButtonClick.bind(this);
+        this.previousButtonClick = this.previousButtonClick.bind(this);
+        this.finishButtonClick = this.finishButtonClick.bind(this);
+    }
+    componentDidMount(){
+        this.refreshAnimation(0);
+        window.addEventListener("resize", this.updateWidth.bind(this));
+    }
+    updateWidth(){
+        this.refreshAnimation(this.state.currentStep);
     }
     navigationStepChange(key){
         if(this.props.navSteps){
@@ -22,6 +57,7 @@ class ReactWizard extends React.Component{
                 previousButton: (key > 0 ? true:false),
                 finishButton: (this.props.steps.length === key + 1 ? true:false)
             });
+            this.refreshAnimation(key);
         }
     }
     nextButtonClick(){
@@ -37,6 +73,7 @@ class ReactWizard extends React.Component{
                     previousButton: (key > 0 ? true:false),
                     finishButton: (this.props.steps.length === key + 1 ? true:false)
                 });
+                this.refreshAnimation(key);
         }
     }
     previousButtonClick(){
@@ -53,6 +90,7 @@ class ReactWizard extends React.Component{
                     previousButton: (key > 0 ? true:false),
                     finishButton: (this.props.steps.length === key + 1 ? true:false)
                 });
+                this.refreshAnimation(key);
         }
     }
     finishButtonClick(){
@@ -65,11 +103,51 @@ class ReactWizard extends React.Component{
                     this.props.finishButtonClick();
         }
     }
+    refreshAnimation(index){
+        var total = this.props.steps.length;
+        var li_width = 100/total;
+        var total_steps = this.props.steps.length;
+        var move_distance = this.refs.wizard.children[0].offsetWidth / total_steps;
+        var index_temp = index;
+        var vertical_level = 0;
+
+        var mobile_device = window.innerWidth < 600 && total > 3;
+
+        if(mobile_device){
+            move_distance = this.refs.wizard.children[0].offsetWidth / 2;
+            index_temp = index % 2;
+            li_width = 50;
+        }
+
+        this.setState({width: li_width + '%'})
+
+        var step_width = move_distance;
+        move_distance = move_distance * index_temp;
+
+        var current = index + 1;
+
+        if(current === 1 || (mobile_device === true && (index % 2 === 0) )){
+            move_distance -= 8;
+        } else if(current === total_steps || (mobile_device === true && (index % 2 === 1))){
+            move_distance += 8;
+        }
+
+        if(mobile_device){
+            vertical_level = parseInt(index / 2);
+            vertical_level = vertical_level * 38;
+        }
+        var movingTabStyle = {
+            width: step_width,
+            transform: 'translate3d(' + move_distance + 'px, ' + vertical_level +  'px, 0)',
+            transition: 'all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)'
+        }
+        this.setState({movingTabStyle: movingTabStyle})
+    }
     render(){
 
         return(
-            <div className="wizard-container">
-                <Card className="card-wizard active" data-color={this.props.color}>
+            <div className="wizard-container" ref="wizard">
+                <Card className="card-wizard active" data-color={this.state.color}>
                     <form>
                         {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""}>
                             {this.props.title !== undefined ? (<CardTitle>{this.props.title}</CardTitle>):null}
@@ -80,7 +158,7 @@ class ReactWizard extends React.Component{
                                 {
                                     this.props.steps.map((prop,key) => {
                                         return (
-                                            <NavItem key={key} >
+                                            <NavItem key={key} style={{width: this.state.width}}>
                                                 <NavLink
                                                     className={key === this.state.currentStep ? "active":""}
                                                     onClick={() => this.navigationStepChange(key)}
@@ -92,7 +170,7 @@ class ReactWizard extends React.Component{
                                     })
                                 }
                             </Nav>
-                            <div className="moving-tab" style={{width: "238.885px", transform: "translate3d(-8px, 0px, 0px)", transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"}}>About</div>
+                            <div className="moving-tab" style={this.state.movingTabStyle}>{this.props.steps[this.state.currentStep].stepName}</div>
                         </div>
                         <CardBody>
                             <TabContent activeTab={this.state.currentStep}>
@@ -124,6 +202,10 @@ class ReactWizard extends React.Component{
             </div>
         );
     }
+}
+
+ReactWizard.propTypes = {
+    color: PropTypes.oneOf(['primary', 'green', 'orange', 'red', 'blue'])
 }
 
 export default ReactWizard;
