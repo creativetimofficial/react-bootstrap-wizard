@@ -1,3 +1,4 @@
-## [0.0.1] 2017-11-28
+## [0.0.1] 2017-12-04
 ### Original Release
 - Added React and Reactstrap as base frameworks
+- Added Creative Tim Now UI Dashboard styles

@@ -3,6 +3,7 @@ import {
     Card, CardHeader, CardTitle, CardSubtitle, CardBody, CardFooter, Nav, NavItem, NavLink, TabContent, TabPane, Button
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import './react-wizard.css';
 
 class ReactWizard extends React.Component{
     constructor(props){
@@ -74,10 +75,10 @@ class ReactWizard extends React.Component{
     }
     nextButtonClick(){
         if(
-            this.props.validate &&
+            (this.props.validate &&
             ((this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined &&
             this.refs[this.props.steps[this.state.currentStep].stepName].isValidated()) ||
-            this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined)){
+            this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined)) || this.props.validate === undefined){
                 var key = this.state.currentStep + 1;
                 this.setState({
                     currentStep: key,
@@ -90,19 +91,14 @@ class ReactWizard extends React.Component{
     }
     previousButtonClick(){
         var key = this.state.currentStep - 1;
-        if(
-            key >= 0 &&
-            this.props.validate &&
-            ((this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined &&
-            this.refs[this.props.steps[this.state.currentStep].stepName].isValidated()) ||
-            this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined)){
-                this.setState({
-                    currentStep: key,
-                    nextButton: (this.props.steps.length > key + 1 ? true:false),
-                    previousButton: (key > 0 ? true:false),
-                    finishButton: (this.props.steps.length === key + 1 ? true:false)
-                });
-                this.refreshAnimation(key);
+        if( key >= 0 ){
+            this.setState({
+                currentStep: key,
+                nextButton: (this.props.steps.length > key + 1 ? true:false),
+                previousButton: (key > 0 ? true:false),
+                finishButton: (this.props.steps.length === key + 1 ? true:false)
+            });
+            this.refreshAnimation(key);
         }
     }
     finishButtonClick(){
@@ -160,56 +156,62 @@ class ReactWizard extends React.Component{
         return(
             <div className="wizard-container" ref="wizard">
                 <Card className="card-wizard active" data-color={this.state.color}>
-                    <form>
-                        {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""}>
-                            {this.props.title !== undefined ? (<CardTitle>{this.props.title}</CardTitle>):null}
-                            {this.props.subtitle !== undefined ? (<CardSubtitle>{this.props.subtitle}</CardSubtitle>):null}
-                        </CardHeader>):null}
-                        <div className="wizard-navigation">
-                            <Nav pills>
-                                {
-                                    this.props.steps.map((prop,key) => {
-                                        return (
-                                            <NavItem key={key} style={{width: this.state.width}}>
-                                                <NavLink
-                                                    className={key === this.state.currentStep ? "active":""}
-                                                    onClick={() => this.navigationStepChange(key)}
-                                                >
-                                                    {prop.stepName}
-                                                </NavLink>
-                                            </NavItem>
-                                        )
-                                    })
-                                }
-                            </Nav>
-                            <div className="moving-tab" style={this.state.movingTabStyle}>{this.props.steps[this.state.currentStep].stepName}</div>
+                    {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""}>
+                        {this.props.title !== undefined ? (<CardTitle>{this.props.title}</CardTitle>):null}
+                        {this.props.subtitle !== undefined ? (<CardSubtitle>{this.props.subtitle}</CardSubtitle>):null}
+                    </CardHeader>):null}
+                    <div className="wizard-navigation">
+                        <Nav pills>
+                            {
+                                this.props.steps.map((prop,key) => {
+                                    return (
+                                        <NavItem key={key} style={{width: this.state.width}}>
+                                            <NavLink
+                                                className={key === this.state.currentStep ? "active":""}
+                                                onClick={() => this.navigationStepChange(key)}
+                                            >
+                                                {prop.stepName}
+                                            </NavLink>
+                                        </NavItem>
+                                    )
+                                })
+                            }
+                        </Nav>
+                        <div className="moving-tab" style={this.state.movingTabStyle}>{this.props.steps[this.state.currentStep].stepName}</div>
+                    </div>
+                    <CardBody>
+                        <TabContent activeTab={this.state.currentStep}>
+                            {
+                                this.props.steps.map((prop,key) => {
+                                    return (
+                                        <TabPane tabId={key} key={key} className={this.state.currentStep === key ? "fade show":"fade"}>
+                                            {
+                                                typeof prop.component === 'function' ? (
+                                                    <prop.component ref={prop.stepName}/>
+                                                ):(
+                                                    <div ref={prop.stepName}>
+                                                        {prop.component}
+                                                    </div>
+                                                )
+                                            }
+                                        </TabPane>
+                                    );
+                                })
+                            }
+                        </TabContent>
+                    </CardBody>
+                    <CardFooter>
+                        <div style={{float: "right"}}>
+                            {this.state.nextButton ? (<Button className={"btn-next" + (this.props.nextButtonClasses !== undefined ? (" "+this.props.nextButtonClasses):"")} onClick={() => this.nextButtonClick()}>{this.props.nextButtonText !== undefined ? this.props.nextButtonText:"Next"}</Button>):null}
+                            {this.state.finishButton ? (<Button className={"btn-finish" + (this.finishButtonClasses !== undefined ? (" "+this.props.finishButtonClasses):"")} onClick={() => this.finishButtonClick()}>{this.props.finishButtonText !== undefined ? this.props.finishButtonText:"Finish"}</Button>):null}
                         </div>
-                        <CardBody>
-                            <TabContent activeTab={this.state.currentStep}>
-                                {
-                                    this.props.steps.map((prop,key) => {
-                                        return (
-                                            <TabPane tabId={key} key={key} className={this.state.currentStep === key ? "fade show":"fade"}>
-                                                <prop.component ref={prop.stepName}/>
-                                            </TabPane>
-                                        );
-                                    })
-                                }
-                            </TabContent>
-                        </CardBody>
-                        <CardFooter>
-                            <div className="pull-right">
-                                {this.state.nextButton ? (<Button className={"btn-next" + (this.props.nextButtonClasses !== undefined ? (" "+this.props.nextButtonClasses):"")} onClick={() => this.nextButtonClick()}>{this.props.nextButtonText !== undefined ? this.props.nextButtonText:"Next"}</Button>):null}
-                                {this.state.finishButton ? (<Button className={"btn-finish" + (this.finishButtonClasses !== undefined ? (" "+this.props.finishButtonClasses):"")} onClick={() => this.finishButtonClick()}>{this.props.finishButtonText !== undefined ? this.props.finishButtonText:"Finish"}</Button>):null}
-                            </div>
-                            <div className="pull-left">
-                                {this.state.previousButton ? (<Button className={"btn-previous" + (this.props.previousButtonClasses !== undefined ? (" "+this.props.previousButtonClasses):"")} onClick={() => this.previousButtonClick()}>{this.props.previousButtonText !== undefined ? this.props.previousButtonText:"Previous"}</Button>):null}
-                            </div>
-                            <div className="clearfix">
+                        <div style={{float: "left"}}>
+                            {this.state.previousButton ? (<Button className={"btn-previous" + (this.props.previousButtonClasses !== undefined ? (" "+this.props.previousButtonClasses):"")} onClick={() => this.previousButtonClick()}>{this.props.previousButtonText !== undefined ? this.props.previousButtonText:"Previous"}</Button>):null}
+                        </div>
+                        <div className="clearfix">
 
-                            </div>
-                        </CardFooter>
-                    </form>
+                        </div>
+                    </CardFooter>
                 </Card>
             </div>
         );
@@ -217,7 +219,14 @@ class ReactWizard extends React.Component{
 }
 
 ReactWizard.propTypes = {
-    color: PropTypes.oneOf(['primary', 'green', 'orange', 'red', 'blue'])
+    color: PropTypes.oneOf(['primary', 'green', 'orange', 'red', 'blue']),
+    previousButtonClasses: PropTypes.string,
+    finishButtonClasses: PropTypes.string,
+    nextButtonClasses: PropTypes.string,
+    headerTextCenter: PropTypes.bool,
+    steps: PropTypes.arrayOf(PropTypes.object),
+    navSteps: PropTypes.bool,
+    validate: PropTypes.bool
 }
 
 export default ReactWizard;
