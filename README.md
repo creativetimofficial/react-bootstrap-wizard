@@ -18,7 +18,7 @@ import ReactWizard from 'react-wizard';
 ```
 After that, in your component render method add the following line:
 ```
-<ReactWizard {...props} />
+<ReactWizard {...props} /> // where props are the properties you want
 ```
 
 ## Properties
