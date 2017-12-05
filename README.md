@@ -60,12 +60,14 @@ Use this prop to make the wizard steps clickable.
 ### *steps*
 This is an array of objects. This objects have two properties:
 1. *stepName* -> used for the name that will appear in the nav (**these have to be unique**)
-2. *component* -> this is what it will be rendered for the *stepName* (**has to be class/function**)
+2. *component* -> this is what will be rendered for each *stepName* (**has to be class/function**)
 
 ### *validate*
 This controls the validation of each step. The user won't be able to pass a step that isn't valid.
-The validation is done in each step's component class/function. You have to create a function **isValidated** with no parameters that will return one of *true* or *false*. If returned *true*, than the user will be able to go to the next step, else if returned *false*, than the user won't be able to go to the next step.
-If this prop is set, and the step component doesn't have the **isValidated** function, than the default will be considered true, and the user will be able to go to the next step.
+The validation is done in each step's component class/function.
+You have to create a function **isValidated** with no parameters that will return one of *true* or *false*.
+If returned *true*, than the user will be able to go to the next step, else if returned *false*, than the user won't be able to go to the next step.
+If this prop is set, and the step component doesn't have the **isValidated** function, than the default will be considered **true**, and the user will be able to go to the next step.
 
 ## Example code
 
