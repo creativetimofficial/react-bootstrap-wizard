@@ -28,7 +28,7 @@
     },
     "peerDependencies": {
         "react": "16.1.0",
-        "reactstrap": "5.0.0-alpha.4",
+        "reactstrap": "5.0.0-alpha.4"
     },
     "keywords": [
         "react",
