@@ -2,7 +2,7 @@
 
 [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
 
-**React Wizard** is a react component package that allows you to split a complicated flow or a complicated form in multiple steps and it's made with [reactstrap components](https://reactstrap.github.io/) and [React](https://reactjs.org/) using [Creative Tim Now UI styles](https://www.creative-tim.com/product/now-ui-kit-pro).
+**React Bootstrap Wizard** is a react component package that allows you to split a complicated flow or a complicated form in multiple steps and it's made with [reactstrap components](https://reactstrap.github.io/) and [React](https://reactjs.org/) using [Creative Tim Now UI styles](https://www.creative-tim.com/product/now-ui-kit-pro).
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install --save react-bootstrap-wizard@latest
 
 Import *react-wizard* in your component:
 ```
-import ReactWizard from 'react-wizard';
+import ReactWizard from 'react-bootstrap-wizard';
 ```
 After that, in your component render method add the following line:
 ```
