@@ -74,7 +74,7 @@ If this prop is set, and the step component doesn't have the **isValidated** fun
 ```
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactWizard from 'react-wizard';
+import ReactWizard from 'react-bootstrap-wizard';
 import {
     Container, Row, Col
 } from 'reactstrap';
