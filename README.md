@@ -143,7 +143,7 @@ ReactDOM.render((
 For this component to work properly you have to have the following libraries installed in your project:
 
 ```
-npm install --save reactstrap@next
+npm install --save reactstrap@5.0.0-alpha.4
 npm install --save bootstrap@4.0.0-beta.2
 ```
 
