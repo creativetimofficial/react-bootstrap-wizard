@@ -134,11 +134,11 @@ class ReactWizard extends React.Component{
 
         var current = index + 1;
 
-        if(current === 1 || (mobile_device === true && (index % 2 === 0) )){
-            move_distance -= 8;
-        } else if(current === total_steps || (mobile_device === true && (index % 2 === 1))){
-            move_distance += 8;
-        }
+        // if(current === 1 || (mobile_device === true && (index % 2 === 0) )){
+        //     move_distance -= 8;
+        // } else if(current === total_steps || (mobile_device === true && (index % 2 === 1))){
+        //     move_distance += 8;
+        // }
 
         if(mobile_device){
             vertical_level = parseInt(index / 2);
@@ -155,30 +155,29 @@ class ReactWizard extends React.Component{
 
         return(
             <div className="wizard-container" ref="wizard">
-                <Card className="card-wizard active" data-color={this.state.color}>
-                    {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""}>
-                        {this.props.title !== undefined ? (<CardTitle>{this.props.title}</CardTitle>):null}
+                <Card className="card card-wizard active" data-color="primary">
+                    {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""} data-background-color={this.state.color}>
+                        {this.props.title !== undefined ? (<CardTitle tag="h3">{this.props.title}</CardTitle>):null}
                         {this.props.subtitle !== undefined ? (<CardSubtitle>{this.props.subtitle}</CardSubtitle>):null}
-                    </CardHeader>):null}
-                    <div className="wizard-navigation">
-                        <Nav pills>
-                            {
-                                this.props.steps.map((prop,key) => {
-                                    return (
-                                        <NavItem key={key} style={{width: this.state.width}}>
-                                            <NavLink
-                                                className={key === this.state.currentStep ? "active":""}
-                                                onClick={() => this.navigationStepChange(key)}
-                                            >
-                                                {prop.stepName}
-                                            </NavLink>
-                                        </NavItem>
-                                    )
-                                })
-                            }
-                        </Nav>
-                        <div className="moving-tab" style={this.state.movingTabStyle}>{this.props.steps[this.state.currentStep].stepName}</div>
-                    </div>
+                        <div className="wizard-navigation">
+                            <Nav pills>
+                                {
+                                    this.props.steps.map((prop,key) => {
+                                        return (
+                                            <NavItem key={key} style={{width: this.state.width}}>
+                                                <NavLink
+                                                    className={key === this.state.currentStep ? "active":""}
+                                                    onClick={() => this.navigationStepChange(key)}
+                                                >
+                                                    {prop.stepName}
+                                                </NavLink>
+                                            </NavItem>
+                                        )
+                                    })
+                                }
+                            </Nav>
+                            <div className="moving-tab" style={this.state.movingTabStyle}>{this.props.steps[this.state.currentStep].stepName}</div>
+                        </div></CardHeader>):null}
                     <CardBody>
                         <TabContent activeTab={this.state.currentStep}>
                             {

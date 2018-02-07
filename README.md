@@ -24,7 +24,7 @@ After that, in your component render method add the following line:
 ## Properties
 
 ### *color*
-This prop is used to create the background color of the nav steps and can be one of (***default is the first option***):
+This prop is used to create the background color of the header and can be one of (***default is the first option***):
 ```
 1. 'primary'
 2. 'green'
