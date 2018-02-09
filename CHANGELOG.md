@@ -1,3 +1,7 @@
+## [0.0.4] 2018-02-09
+### Changes in tab margins
+- Added margin left and right to moving tab
+
 ## [0.0.3] 2018-02-07
 ### Changes in color
 - Change the color from only on navs to the whole header
