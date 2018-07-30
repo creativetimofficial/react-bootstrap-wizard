@@ -10,19 +10,19 @@ class ReactWizard extends React.Component{
         super(props);
         var width;
         if(this.props.steps.length === 1){
-            width = '100%';
+            width = 'calc(100% - 10px)';
         } else {
             if(window.innerWidth < 600){
                 if(this.props.steps.length !== 3){
-                    width = '50%';
+                    width = 'calc(50% - 10px)';
                 } else {
-                    width = 100/3 + '%';
+                    width = 'calc(' + 100 / 3 + '% - 10px)';
                 }
             } else {
                 if(this.props.steps.length === 2){
-                    width = '50%';
+                    width = 'calc(50% - 10px)';
                 } else {
-                    width = 100/3 + '%';
+                    width = 'calc(' + 100 / 3 + '% - 10px)';
                 }
             }
         }
@@ -33,6 +33,7 @@ class ReactWizard extends React.Component{
             previousButton: false,
             finishButton: (this.props.steps.length === 1 ? true:false),
             width: width,
+            wizardData: this.props.wizardData !== undefined ? this.props.wizardData:{},
             movingTabStyle: {
                 transition: 'transform 0s'
             }
@@ -54,7 +55,7 @@ class ReactWizard extends React.Component{
         if(this.props.navSteps){
             var validationState = true;
             if(key > this.state.currentStep){
-                for(var i = this.state.currentStep ; i < key ; i++){
+                for(var i = this.state.currentStep; i < key; i++){
                     if( this.refs[this.props.steps[i].stepName].isValidated !== undefined &&
                         this.refs[this.props.steps[i].stepName].isValidated() === false){
                         validationState = false;
@@ -81,6 +82,9 @@ class ReactWizard extends React.Component{
             this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined)) || this.props.validate === undefined){
                 var key = this.state.currentStep + 1;
                 this.setState({
+                    wizardData: {
+                        ...this.state.wizardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                    },
                     currentStep: key,
                     nextButton: (this.props.steps.length > key + 1 ? true:false),
                     previousButton: (key > 0 ? true:false),
@@ -91,8 +95,11 @@ class ReactWizard extends React.Component{
     }
     previousButtonClick(){
         var key = this.state.currentStep - 1;
-        if( key >= 0 ){
+        if(key >= 0){
             this.setState({
+                wizardData: {
+                    ...this.state.wizardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                },
                 currentStep: key,
                 nextButton: (this.props.steps.length > key + 1 ? true:false),
                 previousButton: (key > 0 ? true:false),
@@ -108,7 +115,11 @@ class ReactWizard extends React.Component{
             this.refs[this.props.steps[this.state.currentStep].stepName].isValidated()) ||
             this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined) &&
             this.props.finishButtonClick !== undefined){
-                    this.props.finishButtonClick();
+                this.setState({
+                    wizardData: {
+                        ...this.state.wizardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                    }
+                }, () => { this.props.finishButtonClick(this.state.wizardData) });
         }
     }
     refreshAnimation(index){
@@ -145,8 +156,8 @@ class ReactWizard extends React.Component{
             vertical_level = vertical_level * 38;
         }
         var movingTabStyle = {
-            width: step_width,
-            transform: 'translate3d(' + move_distance + 'px, ' + vertical_level +  'px, 0)',
+            width: step_width - 20,
+            transform: 'translate3d(' + move_distance + 'px, ' + vertical_level + 'px, 0)',
             transition: 'all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)'
         }
         this.setState({movingTabStyle: movingTabStyle})
@@ -186,7 +197,7 @@ class ReactWizard extends React.Component{
                                         <TabPane tabId={key} key={key} className={this.state.currentStep === key ? "fade show":"fade"}>
                                             {
                                                 typeof prop.component === 'function' ? (
-                                                    <prop.component ref={prop.stepName}/>
+                                                    <prop.component ref={prop.stepName} wizardData={this.state.wizardData}/>
                                                 ):(
                                                     <div ref={prop.stepName}>
                                                         {prop.component}
@@ -202,7 +213,7 @@ class ReactWizard extends React.Component{
                     <CardFooter>
                         <div style={{float: "right"}}>
                             {this.state.nextButton ? (<Button className={"btn-next" + (this.props.nextButtonClasses !== undefined ? (" "+this.props.nextButtonClasses):"")} onClick={() => this.nextButtonClick()}>{this.props.nextButtonText !== undefined ? this.props.nextButtonText:"Next"}</Button>):null}
-                            {this.state.finishButton ? (<Button className={"btn-finish" + (this.finishButtonClasses !== undefined ? (" "+this.props.finishButtonClasses):"")} onClick={() => this.finishButtonClick()}>{this.props.finishButtonText !== undefined ? this.props.finishButtonText:"Finish"}</Button>):null}
+                            {this.state.finishButton ? (<Button className={"btn-finish d-inline-block" + (this.props.finishButtonClasses !== undefined ? (" " + this.props.finishButtonClasses):"")} onClick={() => this.finishButtonClick()}>{this.props.finishButtonText !== undefined ? this.props.finishButtonText:"Finish"}</Button>):null}
                         </div>
                         <div style={{float: "left"}}>
                             {this.state.previousButton ? (<Button className={"btn-previous" + (this.props.previousButtonClasses !== undefined ? (" "+this.props.previousButtonClasses):"")} onClick={() => this.previousButtonClick()}>{this.props.previousButtonText !== undefined ? this.props.previousButtonText:"Previous"}</Button>):null}
