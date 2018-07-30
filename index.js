@@ -97,6 +97,9 @@ class ReactWizard extends React.Component {
         var key = this.state.currentStep - 1;
         if (key >= 0) {
             this.setState({
+                wizzardData: {
+                    ...this.state.wizzardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                },
                 currentStep: key,
                 nextButton: (this.props.steps.length > key + 1 ? true : false),
                 previousButton: (key > 0 ? true : false),
@@ -112,7 +115,11 @@ class ReactWizard extends React.Component {
                 this.refs[this.props.steps[this.state.currentStep].stepName].isValidated()) ||
                 this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined) &&
             this.props.finishButtonClick !== undefined) {
-            this.props.finishButtonClick(this.state.wizzardData);
+            this.setState({
+                wizzardData: {
+                    ...this.state.wizzardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                }
+            }, () => { this.props.finishButtonClick(this.state.wizzardData) });
         }
     }
     refreshAnimation(index) {
