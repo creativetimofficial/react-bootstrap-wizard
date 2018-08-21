@@ -65,6 +65,9 @@ class ReactWizard extends React.Component{
             }
             if(validationState){
                 this.setState({
+                    wizardData: {
+                        ...this.state.wizardData, ...this.refs[this.props.steps[this.state.currentStep].stepName].state
+                    },
                     currentStep: key,
                     nextButton: (this.props.steps.length > key + 1 ? true:false),
                     previousButton: (key > 0 ? true:false),
@@ -124,9 +127,9 @@ class ReactWizard extends React.Component{
     }
     refreshAnimation(index){
         var total = this.props.steps.length;
-        var li_width = 100/total;
-        var total_steps = this.props.steps.length;
-        var move_distance = this.refs.wizard.children[0].offsetWidth / total_steps;
+        var li_width = 100 / total;
+        var total_steps = this.props.steps !== undefined ? this.props.steps.length : 0;
+        var move_distance = this.refs.wizard !== undefined ? this.refs.wizard.children[0].offsetWidth / total_steps : 0;
         var index_temp = index;
         var vertical_level = 0;
 
@@ -138,7 +141,7 @@ class ReactWizard extends React.Component{
             li_width = 50;
         }
 
-        this.setState({width: li_width + '%'})
+        this.setState({ width: li_width + '%' });
 
         var step_width = move_distance;
         move_distance = move_distance * index_temp;
@@ -159,14 +162,14 @@ class ReactWizard extends React.Component{
             width: step_width - 20,
             transform: 'translate3d(' + move_distance + 'px, ' + vertical_level + 'px, 0)',
             transition: 'all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)'
-        }
-        this.setState({movingTabStyle: movingTabStyle})
+        };
+        this.setState({ movingTabStyle: movingTabStyle });
     }
     render(){
 
         return(
             <div className="wizard-container" ref="wizard">
-                <Card className="card card-wizard active" data-color="primary">
+                <Card className="card card-wizard active" data-color={this.state.color}>
                     {(this.props.title !== undefined || this.props.subtitle !== undefined) ? (<CardHeader className={this.props.headerTextCenter !== undefined ? "text-center":""} data-background-color={this.state.color}>
                         {this.props.title !== undefined ? (<CardTitle tag="h3">{this.props.title}</CardTitle>):null}
                         {this.props.subtitle !== undefined ? (<CardSubtitle>{this.props.subtitle}</CardSubtitle>):null}
@@ -194,7 +197,7 @@ class ReactWizard extends React.Component{
                             {
                                 this.props.steps.map((prop,key) => {
                                     return (
-                                        <TabPane tabId={key} key={key} className={this.state.currentStep === key ? "fade show":"fade"}>
+                                        <TabPane tabId={key} key={key} className={this.state.currentStep === key ? "fade show active":"fade"}>
                                             {
                                                 typeof prop.component === 'function' ? (
                                                     <prop.component ref={prop.stepName} wizardData={this.state.wizardData}/>
