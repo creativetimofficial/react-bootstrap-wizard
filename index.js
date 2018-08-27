@@ -3,7 +3,6 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardSubtitle,
   CardBody,
   CardFooter,
   Nav,
@@ -14,7 +13,6 @@ import {
   Button
 } from "reactstrap";
 import PropTypes from "prop-types";
-import "./react-wizard.css";
 
 class ReactWizard extends React.Component {
   constructor(props) {
@@ -214,7 +212,7 @@ class ReactWizard extends React.Component {
       <div className="wizard-container" ref="wizard">
         <Card className="card card-wizard active" data-color={this.state.color}>
           {this.props.title !== undefined ||
-          this.props.subtitle !== undefined ? (
+          this.props.description !== undefined ? (
             <CardHeader
               className={
                 this.props.headerTextCenter !== undefined ? "text-center" : ""
@@ -224,8 +222,8 @@ class ReactWizard extends React.Component {
               {this.props.title !== undefined ? (
                 <CardTitle tag="h3">{this.props.title}</CardTitle>
               ) : null}
-              {this.props.subtitle !== undefined ? (
-                <CardSubtitle>{this.props.subtitle}</CardSubtitle>
+              {this.props.description !== undefined ? (
+                <h3 className="description">{this.props.description}</h3>
               ) : null}
               <div className="wizard-navigation" ref="navStepsLi">
                 <Nav pills>
@@ -238,6 +236,11 @@ class ReactWizard extends React.Component {
                           }
                           onClick={() => this.navigationStepChange(key)}
                         >
+                          {
+                            prop.stepIcon !== undefined && prop.stepIcon !== "" ? (
+                              <i className={prop.stepIcon}/>
+                            ):null
+                          }
                           {prop.stepName}
                         </NavLink>
                       </NavItem>
@@ -245,6 +248,12 @@ class ReactWizard extends React.Component {
                   })}
                 </Nav>
                 <div className="moving-tab" style={this.state.movingTabStyle}>
+                  {
+                    this.props.steps[this.state.currentStep].stepIcon !== undefined &&
+                    this.props.steps[this.state.currentStep].stepIcon !== "" ? (
+                      <i className={this.props.steps[this.state.currentStep].stepIcon}/>
+                    ):null
+                  }
                   {this.props.steps[this.state.currentStep].stepName}
                 </div>
               </div>
@@ -335,7 +344,10 @@ class ReactWizard extends React.Component {
 }
 
 ReactWizard.defaultProps = {
-  validate: false
+  validate: false,
+  previousButtonTex: "Previous",
+  finishButtonText: "Finish",
+  nextButtonText: "Next"
 }
 
 ReactWizard.propTypes = {
@@ -344,10 +356,21 @@ ReactWizard.propTypes = {
   finishButtonClasses: PropTypes.string,
   nextButtonClasses: PropTypes.string,
   headerTextCenter: PropTypes.bool,
-  steps: PropTypes.arrayOf(PropTypes.object),
   navSteps: PropTypes.bool,
   validate: PropTypes.bool,
-  finishButtonClick: PropTypes.func
+  finishButtonClick: PropTypes.func,
+  previousButtonTex: PropTypes.node,
+  finishButtonText: PropTypes.node,
+  nextButtonText: PropTypes.node,
+  title: PropTypes.node,
+  description: PropTypes.node,
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({
+      stepName: PropTypes.string.isRequired,
+      stepIcon: PropTypes.string,
+      component: PropTypes.func.isRequired
+    })
+  ).isRequired,
 };
 
 export default ReactWizard;

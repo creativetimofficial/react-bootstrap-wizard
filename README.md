@@ -22,6 +22,37 @@ After that, in your component render method add the following line:
 ```
 
 ## Properties
+```
+ReactWizard.defaultProps = {
+  validate: false,
+  previousButtonTex: "Previous",
+  finishButtonText: "Finish",
+  nextButtonText: "Next"
+}
+
+ReactWizard.propTypes = {
+  color: PropTypes.oneOf(["primary", "green", "orange", "red", "blue"]),
+  previousButtonClasses: PropTypes.string,
+  finishButtonClasses: PropTypes.string,
+  nextButtonClasses: PropTypes.string,
+  headerTextCenter: PropTypes.bool,
+  navSteps: PropTypes.bool,
+  validate: PropTypes.bool,
+  finishButtonClick: PropTypes.func,
+  previousButtonTex: PropTypes.node,
+  finishButtonText: PropTypes.node,
+  nextButtonText: PropTypes.node,
+  title: PropTypes.node,
+  description: PropTypes.node,
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({
+      stepName: PropTypes.string.isRequired,
+      stepIcon: PropTypes.string,
+      component: PropTypes.func.isRequired
+    })
+  ).isRequired,
+};
+```
 
 ### *color*
 This prop is used to create the background color of the header and can be one of (***default is the first option***):
@@ -57,10 +88,17 @@ Use this prop to make the title and subtitle of the wizard center aligned.
 ### *navSteps*
 Use this prop to make the wizard steps clickable.
 
+### *title*
+Use this prop to add a nice title to your wizard.
+
+### *description*
+Use this prop to add a nice description / subtitle to your wizard.
+
 ### *steps*
 This is an array of objects. This objects have two properties:
 1. *stepName* -> used for the name that will appear in the nav (**these have to be unique**)
-2. *component* -> this is what will be rendered for each *stepName* (**has to be class/function**)
+2. *stepIcon* -> used to add an icon alongside the name (**these has to be a string**)
+3. *component* -> this is what will be rendered for each *stepName* (**has to be class/function**)
 
 ### *validate*
 This controls the validation of each step. The user won't be able to pass a step that isn't valid.
@@ -149,7 +187,7 @@ class WizardExample extends React.Component {
               steps={steps}
               navSteps
               title="react-wizard"
-              subtitle="This will help you split a complicated flow or a complicated form in multiple steps."
+              description="This will help you split a complicated flow or a complicated form in multiple steps."
               headerTextCenter
               validate
               color="primary"
@@ -163,6 +201,17 @@ class WizardExample extends React.Component {
 }
 
 ReactDOM.render(<WizardExample />, document.getElementById("root"));
+```
+
+## Styles
+Be sure to include the styles in your project.
+You can either include the css:
+```
+import "react-bootstrap-wizard/dist/react-wizard.css"
+```
+Or the scss
+```
+import "react-bootstrap-wizard/dist/react-wizard.scss"
 ```
 
 ## Dependencies
