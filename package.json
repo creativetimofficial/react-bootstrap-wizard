@@ -3,11 +3,8 @@
     "version": "0.0.4",
     "description": "A react component package that allows you to split a complicated flow or a complicated form in multiple steps.",
     "main": "dist/index.js",
-    "files": {
-        "license": "./LICENSE.md"
-    },
     "scripts": {
-        "build": "mkdir -p dist && babel index.js -o dist/index.js"
+        "build": "mkdir -p dist && babel index.js -o dist/index.js && cp react-wizard.css dist/react-wizard.css"
     },
     "babel": {
         "presets": [
@@ -27,8 +24,8 @@
         "babel-preset-stage-0": "6.16.0"
     },
     "peerDependencies": {
-        "react": "16.1.0",
-        "reactstrap": "5.0.0-alpha.4"
+        "react": "16.x.x",
+        "reactstrap": "6.x.x"
     },
     "keywords": [
         "react",
@@ -50,7 +47,7 @@
         "reactstrap-wizard"
     ],
     "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
-    "license": "SEE LICENSE IN license",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/creativetimofficial/react-wizard/issues"
     },

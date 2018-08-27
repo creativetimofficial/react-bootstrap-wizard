@@ -69,73 +69,100 @@ You have to create a function **isValidated** with no parameters that will retur
 If returned *true*, than the user will be able to go to the next step, else if returned *false*, than the user won't be able to go to the next step.
 If this prop is set, and the step component doesn't have the **isValidated** function, than the default will be considered **true**, and the user will be able to go to the next step.
 
+### finishButtonClick
+This function is called when the user presses the finish button.
+See the bellow example to see how to use it.
+```
+function finishButtonClick(allStepStates)
+```
+
 ## Example code
 
 ```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactWizard from 'react-bootstrap-wizard';
-import {
-    Container, Row, Col
-} from 'reactstrap';
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactWizard from "react-bootstrap-wizard";
+import { Container, Row, Col } from "reactstrap";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 
-class FirstStep extends React.Component{
-    render(){
-        return (
-            <div>Hey from First</div>
-        )
-    }
+class FirstStep extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstStep: "first step here"
+    };
+  }
+  render() {
+    return <div>Hey from First</div>;
+  }
 }
-class SecondStep extends React.Component{
-    isValidated(){
-        // do some validations
-        // decide if you will
-        // return true;
-        // or you will
-        return false;
-    }
-    render(){
-        return (
-            <div>Hey from Second</div>
-        )
-    }
+class SecondStep extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      secondStep: "second step here"
+    };
+  }
+  isValidated() {
+    // do some validations
+    // decide if you will
+    return true;
+    // or you will
+    // return false;
+  }
+  render() {
+    return <div>Hey from Second</div>;
+  }
 }
-class ThirdStep extends React.Component{
-    render(){
-        return (
-            <div>Hey from Third</div>
-        )
-    }
+class ThirdStep extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      thirdStep: "third step here"
+    };
+  }
+  render() {
+    return <div>Hey from Third</div>;
+  }
 }
 
 var steps = [
-    // this step hasn't got a isValidated() function, so it will be considered to be true
-    { stepName: 'First', component: FirstStep },
-    // this step will be validated to false
-    { stepName: 'Second', component: SecondStep },
-    // this step will never be reachable because of the seconds isValidated() steps function that will always return false
-    { stepName: 'Third', component: ThirdStep }
+  // this step hasn't got a isValidated() function, so it will be considered to be true
+  { stepName: "First", component: FirstStep },
+  // this step will be validated to false
+  { stepName: "Second", component: SecondStep },
+  // this step will never be reachable because of the seconds isValidated() steps function that will always return false
+  { stepName: "Third", component: ThirdStep }
 ];
 
-ReactDOM.render((
-    <Container fluid style={{marginTop: "15px"}}>
+class WizardExample extends React.Component {
+  finishButtonClick(allStates) {
+    console.log(allStates);
+  }
+  render() {
+    return (
+      <Container fluid style={{ marginTop: "15px" }}>
         <Row>
-            <Col xs={12} md={6} className="mr-auto ml-auto">
-                <ReactWizard
-                    steps={steps}
-                    navSteps
-                    title="react-wizard"
-                    subtitle="This will help you split a complicated flow or a complicated form in multiple steps."
-                    headerTextCenter
-                    validate
-                    color="primary"
-                />
-            </Col>
+          <Col xs={12} md={6} className="mr-auto ml-auto">
+            <ReactWizard
+              steps={steps}
+              navSteps
+              title="react-wizard"
+              subtitle="This will help you split a complicated flow or a complicated form in multiple steps."
+              headerTextCenter
+              validate
+              color="primary"
+              finishButtonClick={this.finishButtonClick}
+            />
+          </Col>
         </Row>
-    </Container>
-), document.getElementById('root'));
+      </Container>
+    );
+  }
+}
+
+ReactDOM.render(<WizardExample />, document.getElementById("root"));
 ```
 
 ## Dependencies
@@ -143,13 +170,13 @@ ReactDOM.render((
 For this component to work properly you have to have the following libraries installed in your project:
 
 ```
-npm install --save reactstrap@5.0.0-alpha.4
-npm install --save bootstrap@4.0.0-beta.2
+npm install --save reactstrap
+npm install --save bootstrap
 ```
 
 
 [CHANGELOG]: ./CHANGELOG.md
 
 [LICENSE]: ./LICENSE.md
-[version-badge]: https://img.shields.io/badge/version-0.0.4-blue.svg
+[version-badge]: https://img.shields.io/badge/version-0.0.5-blue.svg
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
