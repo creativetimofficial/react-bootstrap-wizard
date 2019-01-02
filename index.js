@@ -58,7 +58,7 @@ class ReactWizard extends React.Component {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth.bind(this));
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.isCancelled = true;
     window.removeEventListener("resize", this.updateWidth);
     var id = window.setTimeout(null, 0);
@@ -67,7 +67,8 @@ class ReactWizard extends React.Component {
     }
   }
   updateWidth() {
-    !this.isCancelled && setTimeout(() => this.refreshAnimation(this.state.currentStep),200);
+    !this.isCancelled &&
+      setTimeout(() => this.refreshAnimation(this.state.currentStep), 200);
   }
   navigationStepChange(key) {
     if (this.props.navSteps) {
@@ -109,7 +110,8 @@ class ReactWizard extends React.Component {
           ].isValidated()) ||
           this.refs[this.props.steps[this.state.currentStep].stepName]
             .isValidated === undefined)) ||
-      this.props.validate === undefined || !this.props.validate
+      this.props.validate === undefined ||
+      !this.props.validate
     ) {
       var key = this.state.currentStep + 1;
       this.setState({
@@ -217,8 +219,7 @@ class ReactWizard extends React.Component {
               className={
                 this.props.headerTextCenter !== undefined ? "text-center" : ""
               }
-              data-background-color={this.state.color}
-            >
+              data-background-color={this.state.color}>
               {this.props.title !== undefined ? (
                 <CardTitle tag="h3">{this.props.title}</CardTitle>
               ) : null}
@@ -234,13 +235,11 @@ class ReactWizard extends React.Component {
                           className={
                             key === this.state.currentStep ? "active" : ""
                           }
-                          onClick={() => this.navigationStepChange(key)}
-                        >
-                          {
-                            prop.stepIcon !== undefined && prop.stepIcon !== "" ? (
-                              <i className={prop.stepIcon}/>
-                            ):null
-                          }
+                          onClick={() => this.navigationStepChange(key)}>
+                          {prop.stepIcon !== undefined &&
+                          prop.stepIcon !== "" ? (
+                            <i className={prop.stepIcon} />
+                          ) : null}
                           {prop.stepName}
                         </NavLink>
                       </NavItem>
@@ -248,12 +247,15 @@ class ReactWizard extends React.Component {
                   })}
                 </Nav>
                 <div className="moving-tab" style={this.state.movingTabStyle}>
-                  {
-                    this.props.steps[this.state.currentStep].stepIcon !== undefined &&
-                    this.props.steps[this.state.currentStep].stepIcon !== "" ? (
-                      <i className={this.props.steps[this.state.currentStep].stepIcon}/>
-                    ):null
-                  }
+                  {this.props.steps[this.state.currentStep].stepIcon !==
+                    undefined &&
+                  this.props.steps[this.state.currentStep].stepIcon !== "" ? (
+                    <i
+                      className={
+                        this.props.steps[this.state.currentStep].stepIcon
+                      }
+                    />
+                  ) : null}
                   {this.props.steps[this.state.currentStep].stepName}
                 </div>
               </div>
@@ -270,12 +272,12 @@ class ReactWizard extends React.Component {
                       this.state.currentStep === key
                         ? "fade show active"
                         : "fade"
-                    }
-                  >
+                    }>
                     {typeof prop.component === "function" ? (
                       <prop.component
                         ref={prop.stepName}
                         wizardData={this.state.wizardData}
+                        {...this.props}
                       />
                     ) : (
                       <div ref={prop.stepName}>{prop.component}</div>
@@ -295,8 +297,7 @@ class ReactWizard extends React.Component {
                       ? " " + this.props.nextButtonClasses
                       : "")
                   }
-                  onClick={() => this.nextButtonClick()}
-                >
+                  onClick={() => this.nextButtonClick()}>
                   {this.props.nextButtonText !== undefined
                     ? this.props.nextButtonText
                     : "Next"}
@@ -310,8 +311,7 @@ class ReactWizard extends React.Component {
                       ? " " + this.props.finishButtonClasses
                       : "")
                   }
-                  onClick={() => this.finishButtonClick()}
-                >
+                  onClick={() => this.finishButtonClick()}>
                   {this.props.finishButtonText !== undefined
                     ? this.props.finishButtonText
                     : "Finish"}
@@ -327,8 +327,7 @@ class ReactWizard extends React.Component {
                       ? " " + this.props.previousButtonClasses
                       : "")
                   }
-                  onClick={() => this.previousButtonClick()}
-                >
+                  onClick={() => this.previousButtonClick()}>
                   {this.props.previousButtonText !== undefined
                     ? this.props.previousButtonText
                     : "Previous"}
@@ -348,7 +347,7 @@ ReactWizard.defaultProps = {
   previousButtonTex: "Previous",
   finishButtonText: "Finish",
   nextButtonText: "Next"
-}
+};
 
 ReactWizard.propTypes = {
   color: PropTypes.oneOf(["primary", "green", "orange", "red", "blue"]),
@@ -370,7 +369,7 @@ ReactWizard.propTypes = {
       stepIcon: PropTypes.string,
       component: PropTypes.func.isRequired
     })
-  ).isRequired,
+  ).isRequired
 };
 
 export default ReactWizard;
