@@ -25,10 +25,12 @@ After that, in your component render method add the following line:
 ```
 ReactWizard.defaultProps = {
   validate: false,
-  previousButtonTex: "Previous",
+  previousButtonText: "Previous",
   finishButtonText: "Finish",
-  nextButtonText: "Next"
-}
+  nextButtonText: "Next",
+  color: "primary",
+  progressbar: false
+};
 
 ReactWizard.propTypes = {
   color: PropTypes.oneOf(["primary", "green", "orange", "red", "blue"]),
@@ -39,18 +41,20 @@ ReactWizard.propTypes = {
   navSteps: PropTypes.bool,
   validate: PropTypes.bool,
   finishButtonClick: PropTypes.func,
-  previousButtonTex: PropTypes.node,
+  previousButtonText: PropTypes.node,
   finishButtonText: PropTypes.node,
   nextButtonText: PropTypes.node,
   title: PropTypes.node,
   description: PropTypes.node,
+  progressbar: PropTypes.bool,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
       stepName: PropTypes.string.isRequired,
       stepIcon: PropTypes.string,
-      component: PropTypes.func.isRequired
+      component: PropTypes.func.isRequired,
+      stepProps: PropTypes.object,
     })
-  ).isRequired,
+  ).isRequired
 };
 ```
 
@@ -94,11 +98,39 @@ Use this prop to add a nice title to your wizard.
 ### *description*
 Use this prop to add a nice description / subtitle to your wizard.
 
+### *progressbar*
+By setting this prop to true, a progressbar will we rendered instead of a moving tab for the active tab (default is ***false***).
+
 ### *steps*
 This is an array of objects. This objects have two properties:
 1. *stepName* -> used for the name that will appear in the nav (**these have to be unique**)
 2. *stepIcon* -> used to add an icon alongside the name (**these has to be a string**)
 3. *component* -> this is what will be rendered for each *stepName* (**has to be class/function**)
+4. *stepProps* -> this props will be added to the step upon rendering (**has to be an object - like the state object**)
+Example of steps:
+```
+var steps = [
+  {
+    stepName: "About",
+    stepIcon: "tim-icons icon-single-02",
+    component: Step1
+  },
+  {
+    stepName: "Account",
+    stepIcon: "tim-icons icon-settings-gear-63",
+    component: Step2
+  },
+  {
+    stepName: "Address",
+    stepIcon: "tim-icons icon-delivery-fast",
+    component: Step3,
+    stepProp: {
+      prop1: true,
+      prop2: "A string"
+    }
+  }
+];
+```
 
 ### *validate*
 This controls the validation of each step. The user won't be able to pass a step that isn't valid.
@@ -107,7 +139,7 @@ You have to create a function **isValidated** with no parameters that will retur
 If returned *true*, than the user will be able to go to the next step, else if returned *false*, than the user won't be able to go to the next step.
 If this prop is set, and the step component doesn't have the **isValidated** function, than the default will be considered **true**, and the user will be able to go to the next step.
 
-### finishButtonClick
+### *finishButtonClick*
 This function is called when the user presses the finish button.
 See the bellow example to see how to use it.
 ```
@@ -216,7 +248,7 @@ import "react-bootstrap-wizard/dist/react-wizard.scss"
 
 ## Dependencies
 
-For this component to work properly you have to have the following libraries installed in your project:
+For this component to work properly you need to have the following libraries installed in your project:
 
 ```
 npm install --save reactstrap
@@ -227,5 +259,5 @@ npm install --save bootstrap
 [CHANGELOG]: ./CHANGELOG.md
 
 [LICENSE]: ./LICENSE.md
-[version-badge]: https://img.shields.io/badge/version-0.0.5-blue.svg
+[version-badge]: https://img.shields.io/badge/version-0.0.6-blue.svg
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg

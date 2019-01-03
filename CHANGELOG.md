@@ -1,3 +1,11 @@
+## [0.0.6] 2019-01-03
+### Bug fixing
+- Updated README.md
+## Enhancement
+- Added new prop inside `steps` for sending props to the step component (`stepProps`)
+- Added new boolean prop `progressbar`, which will determinate the apperance of a progressbar insted of the moving tab (**Caution: You will need to add steps.stepIcon to your steps for this to work nice**)
+- Added `classnames` library to the project
+
 ## [0.0.5] 2018-08-27
 ### Bug fixing
 - Small changes for this warning: `Can't call setState (or forceUpdate) on an unmounted component.`
