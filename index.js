@@ -277,7 +277,7 @@ class ReactWizard extends React.Component {
                       <prop.component
                         ref={prop.stepName}
                         wizardData={this.state.wizardData}
-                        {...this.props}
+                        {...prop.stepProps}
                       />
                     ) : (
                       <div ref={prop.stepName}>{prop.component}</div>
@@ -367,7 +367,8 @@ ReactWizard.propTypes = {
     PropTypes.shape({
       stepName: PropTypes.string.isRequired,
       stepIcon: PropTypes.string,
-      component: PropTypes.func.isRequired
+      component: PropTypes.func.isRequired,
+      stepProps: PropTypes.object
     })
   ).isRequired
 };
