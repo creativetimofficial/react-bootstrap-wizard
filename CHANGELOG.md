@@ -1,3 +1,8 @@
+## [0.0.6] 2019-01-14
+### Bug fixing
+- Updated README.md
+- `finishButtonClick` now triggers if the `validate` prop is `false`
+
 ## [0.0.6] 2019-01-03
 ### Bug fixing
 - Updated README.md
