@@ -1,6 +1,6 @@
 {
     "name": "react-bootstrap-wizard",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "A react component package that allows you to split a complicated flow or a complicated form in multiple steps.",
     "main": "dist/index.js",
     "scripts": {
