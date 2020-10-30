@@ -1,4 +1,12 @@
-## [0.0.6] 2019-01-14
+## [0.0.8] 2020-10-30
+### Docs
+- Updated README.md
+- Updated CHANGELOG.md
+- Updated version
+### Bug fixing
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/30
+
+## [0.0.7] 2019-01-14
 ### Bug fixing
 - Updated README.md
 - `finishButtonClick` now triggers if the `validate` prop is `false`
