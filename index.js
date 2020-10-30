@@ -56,7 +56,7 @@ class ReactWizard extends React.Component {
     this.navigationStepChange = this.navigationStepChange.bind(this);
     this.refreshAnimation = this.refreshAnimation.bind(this);
     this.previousButtonClick = this.previousButtonClick.bind(this);
-    this.previousButtonClick = this.previousButtonClick.bind(this);
+    this.nextButtonClick = this.nextButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
   }
   componentDidMount() {
