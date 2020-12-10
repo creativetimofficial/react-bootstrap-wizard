@@ -23,6 +23,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -132,48 +136,181 @@ var ReactWizard = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "navigationStepChange",
-    value: function navigationStepChange(key) {
-      if (this.props.navSteps) {
-        var validationState = true;
+    value: function () {
+      var _navigationStepChange = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(key) {
+        var validationState, i;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.props.navSteps) {
+                  _context.next = 18;
+                  break;
+                }
 
-        if (this.props.validate && key > this.state.currentStep) {
-          for (var i = this.state.currentStep; i < key; i++) {
-            if (this.refs[this.props.steps[i].stepName].isValidated !== undefined && this.refs[this.props.steps[i].stepName].isValidated() === false) {
-              validationState = false;
-              break;
+                validationState = true;
+
+                if (!(this.props.validate && key > this.state.currentStep)) {
+                  _context.next = 17;
+                  break;
+                }
+
+                i = this.state.currentStep;
+
+              case 4:
+                if (!(i < key)) {
+                  _context.next = 17;
+                  break;
+                }
+
+                _context.t0 = this.refs[this.props.steps[i].stepName].isValidated !== undefined;
+
+                if (!_context.t0) {
+                  _context.next = 11;
+                  break;
+                }
+
+                _context.next = 9;
+                return this.refs[this.props.steps[i].stepName].isValidated();
+
+              case 9:
+                _context.t1 = _context.sent;
+                _context.t0 = _context.t1 === false;
+
+              case 11:
+                if (!_context.t0) {
+                  _context.next = 14;
+                  break;
+                }
+
+                validationState = false;
+                return _context.abrupt("break", 17);
+
+              case 14:
+                i++;
+                _context.next = 4;
+                break;
+
+              case 17:
+                if (validationState) {
+                  this.setState({
+                    wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state)),
+                    currentStep: key,
+                    highestStep: key > this.state.highestStep ? key : this.state.highestStep,
+                    nextButton: this.props.steps.length > key + 1 ? true : false,
+                    previousButton: key > 0 ? true : false,
+                    finishButton: this.props.steps.length === key + 1 ? true : false
+                  });
+                  this.refreshAnimation(key);
+                }
+
+              case 18:
+              case "end":
+                return _context.stop();
             }
           }
-        }
+        }, _callee, this);
+      }));
 
-        if (validationState) {
-          this.setState({
-            wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state)),
-            currentStep: key,
-            highestStep: key > this.state.highestStep ? key : this.state.highestStep,
-            nextButton: this.props.steps.length > key + 1 ? true : false,
-            previousButton: key > 0 ? true : false,
-            finishButton: this.props.steps.length === key + 1 ? true : false
-          });
-          this.refreshAnimation(key);
-        }
+      function navigationStepChange(_x) {
+        return _navigationStepChange.apply(this, arguments);
       }
-    }
+
+      return navigationStepChange;
+    }()
   }, {
     key: "nextButtonClick",
-    value: function nextButtonClick() {
-      if (this.props.validate && (this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined && this.refs[this.props.steps[this.state.currentStep].stepName].isValidated() || this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined) || this.props.validate === undefined || !this.props.validate) {
-        var key = this.state.currentStep + 1;
-        this.setState({
-          wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state)),
-          currentStep: key,
-          highestStep: key > this.state.highestStep ? key : this.state.highestStep,
-          nextButton: this.props.steps.length > key + 1 ? true : false,
-          previousButton: key > 0 ? true : false,
-          finishButton: this.props.steps.length === key + 1 ? true : false
-        });
-        this.refreshAnimation(key);
+    value: function () {
+      var _nextButtonClick = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var key;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.t2 = this.props.validate;
+
+                if (!_context2.t2) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                _context2.t4 = this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined;
+
+                if (!_context2.t4) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 6;
+                return this.refs[this.props.steps[this.state.currentStep].stepName].isValidated();
+
+              case 6:
+                _context2.t4 = _context2.sent;
+
+              case 7:
+                _context2.t3 = _context2.t4;
+
+                if (_context2.t3) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                _context2.t3 = this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined;
+
+              case 10:
+                _context2.t2 = _context2.t3;
+
+              case 11:
+                _context2.t1 = _context2.t2;
+
+                if (_context2.t1) {
+                  _context2.next = 14;
+                  break;
+                }
+
+                _context2.t1 = this.props.validate === undefined;
+
+              case 14:
+                _context2.t0 = _context2.t1;
+
+                if (_context2.t0) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                _context2.t0 = !this.props.validate;
+
+              case 17:
+                if (!_context2.t0) {
+                  _context2.next = 21;
+                  break;
+                }
+
+                key = this.state.currentStep + 1;
+                this.setState({
+                  wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state)),
+                  currentStep: key,
+                  highestStep: key > this.state.highestStep ? key : this.state.highestStep,
+                  nextButton: this.props.steps.length > key + 1 ? true : false,
+                  previousButton: key > 0 ? true : false,
+                  finishButton: this.props.steps.length === key + 1 ? true : false
+                });
+                this.refreshAnimation(key);
+
+              case 21:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function nextButtonClick() {
+        return _nextButtonClick.apply(this, arguments);
       }
-    }
+
+      return nextButtonClick;
+    }()
   }, {
     key: "previousButtonClick",
     value: function previousButtonClick() {
@@ -193,20 +330,96 @@ var ReactWizard = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "finishButtonClick",
-    value: function finishButtonClick() {
-      var _this3 = this;
+    value: function () {
+      var _finishButtonClick = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var _this3 = this;
 
-      if (this.props.validate === false && this.props.finishButtonClick !== undefined || this.props.validate && (this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined && this.refs[this.props.steps[this.state.currentStep].stepName].isValidated() || this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined) && this.props.finishButtonClick !== undefined) {
-        this.setState({
-          progressbarStyle: {
-            width: "100%"
-          },
-          wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state))
-        }, function () {
-          _this3.props.finishButtonClick(_this3.state.wizardData);
-        });
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.t0 = this.props.validate === false && this.props.finishButtonClick !== undefined;
+
+                if (_context3.t0) {
+                  _context3.next = 17;
+                  break;
+                }
+
+                _context3.t2 = this.props.validate;
+
+                if (!_context3.t2) {
+                  _context3.next = 13;
+                  break;
+                }
+
+                _context3.t4 = this.refs[this.props.steps[this.state.currentStep].stepName].isValidated !== undefined;
+
+                if (!_context3.t4) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                _context3.next = 8;
+                return this.refs[this.props.steps[this.state.currentStep].stepName].isValidated();
+
+              case 8:
+                _context3.t4 = _context3.sent;
+
+              case 9:
+                _context3.t3 = _context3.t4;
+
+                if (_context3.t3) {
+                  _context3.next = 12;
+                  break;
+                }
+
+                _context3.t3 = this.refs[this.props.steps[this.state.currentStep].stepName].isValidated === undefined;
+
+              case 12:
+                _context3.t2 = _context3.t3;
+
+              case 13:
+                _context3.t1 = _context3.t2;
+
+                if (!_context3.t1) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                _context3.t1 = this.props.finishButtonClick !== undefined;
+
+              case 16:
+                _context3.t0 = _context3.t1;
+
+              case 17:
+                if (!_context3.t0) {
+                  _context3.next = 19;
+                  break;
+                }
+
+                this.setState({
+                  progressbarStyle: {
+                    width: "100%"
+                  },
+                  wizardData: _objectSpread(_objectSpread({}, this.state.wizardData), {}, _defineProperty({}, this.props.steps[this.state.currentStep].stepName, this.refs[this.props.steps[this.state.currentStep].stepName].state))
+                }, function () {
+                  _this3.props.finishButtonClick(_this3.state.wizardData);
+                });
+
+              case 19:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function finishButtonClick() {
+        return _finishButtonClick.apply(this, arguments);
       }
-    }
+
+      return finishButtonClick;
+    }()
   }, {
     key: "refreshAnimation",
     value: function refreshAnimation(index) {
@@ -276,7 +489,7 @@ var ReactWizard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/_react["default"].createElement(_reactstrap.Card, {
         className: "card card-wizard active",
         "data-color": this.state.color
-      }, this.props.title !== undefined || this.props.description !== undefined ? /*#__PURE__*/_react["default"].createElement(_reactstrap.CardHeader, {
+      }, /*#__PURE__*/_react["default"].createElement(_reactstrap.CardHeader, {
         className: this.props.headerTextCenter !== undefined ? "text-center" : "",
         "data-background-color": this.state.color
       }, this.props.title !== undefined ? /*#__PURE__*/_react["default"].createElement(_reactstrap.CardTitle, {
@@ -317,7 +530,7 @@ var ReactWizard = /*#__PURE__*/function (_React$Component) {
         style: this.state.movingTabStyle
       }, this.props.steps[this.state.currentStep].stepIcon !== undefined && this.props.steps[this.state.currentStep].stepIcon !== "" ? /*#__PURE__*/_react["default"].createElement("i", {
         className: this.props.steps[this.state.currentStep].stepIcon
-      }) : null, this.props.steps[this.state.currentStep].stepName))) : null, /*#__PURE__*/_react["default"].createElement(_reactstrap.CardBody, null, /*#__PURE__*/_react["default"].createElement(_reactstrap.TabContent, {
+      }) : null, this.props.steps[this.state.currentStep].stepName))), /*#__PURE__*/_react["default"].createElement(_reactstrap.CardBody, null, /*#__PURE__*/_react["default"].createElement(_reactstrap.TabContent, {
         activeTab: this.state.currentStep
       }, this.props.steps.map(function (prop, key) {
         return /*#__PURE__*/_react["default"].createElement(_reactstrap.TabPane, {
