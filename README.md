@@ -266,7 +266,7 @@ Check the bellow example to understand the issue better.
 ```
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactWizard from "views/forms/ReactWizard.js";
+import ReactWizard from "react-bootstrap-wizard";
 import { Container, Row, Col } from "reactstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -354,6 +354,26 @@ function WizardExample() {
 
 ReactDOM.render(<WizardExample />, document.getElementById("root"));
 
+```
+
+## How to work with NextJS
+
+You will need to change:
+```
+import ReactWizard from "react-bootstrap-wizard";
+```
+To:
+```
+import dynamic from 'next/dynamic'
+
+const ReactWizard = dynamic(() => import('react-bootstrap-wizard'))
+
+if (typeof window === "undefined") {
+  global.window = {};
+}
+if (typeof document === "undefined") {
+  global.document = {};
+}
 ```
 
 ## Styles
