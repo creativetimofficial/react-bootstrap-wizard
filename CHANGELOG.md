@@ -1,3 +1,17 @@
+## [0.0.8] 2020-12-10
+### Docs
+- Updated README.md
+- Updated CHANGELOG.md
+- Updated version
+### Bug fixing
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/14
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/20
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/21
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/24
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/25
+- https://github.com/creativetimofficial/react-bootstrap-wizard/pull/28
+- https://github.com/creativetimofficial/react-bootstrap-wizard/issues/32
+
 ## [0.0.8] 2020-10-30
 ### Docs
 - Updated README.md

@@ -15,6 +15,10 @@ import {
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
+const isForwardRefComponent = (component) => {
+  return typeof component === 'object' && component['$$typeof'] === Symbol.for('react.forward_ref')
+};
+
 class ReactWizard extends React.Component {
   constructor(props) {
     super(props);
@@ -75,14 +79,14 @@ class ReactWizard extends React.Component {
     !this.isCancelled &&
       setTimeout(() => this.refreshAnimation(this.state.currentStep), 200);
   }
-  navigationStepChange(key) {
+  async navigationStepChange(key) {
     if (this.props.navSteps) {
       var validationState = true;
       if (this.props.validate && key > this.state.currentStep) {
         for (var i = this.state.currentStep; i < key; i++) {
           if (
             this.refs[this.props.steps[i].stepName].isValidated !== undefined &&
-            this.refs[this.props.steps[i].stepName].isValidated() === false
+            await this.refs[this.props.steps[i].stepName].isValidated() === false
           ) {
             validationState = false;
             break;
@@ -108,12 +112,12 @@ class ReactWizard extends React.Component {
       }
     }
   }
-  nextButtonClick() {
+  async nextButtonClick() {
     if (
       (this.props.validate &&
         ((this.refs[this.props.steps[this.state.currentStep].stepName]
           .isValidated !== undefined &&
-          this.refs[
+          await this.refs[
             this.props.steps[this.state.currentStep].stepName
           ].isValidated()) ||
           this.refs[this.props.steps[this.state.currentStep].stepName]
@@ -159,14 +163,14 @@ class ReactWizard extends React.Component {
       this.refreshAnimation(key);
     }
   }
-  finishButtonClick() {
+  async finishButtonClick() {
     if (
       (this.props.validate === false &&
         this.props.finishButtonClick !== undefined) ||
       (this.props.validate &&
         ((this.refs[this.props.steps[this.state.currentStep].stepName]
           .isValidated !== undefined &&
-          this.refs[
+          await this.refs[
             this.props.steps[this.state.currentStep].stepName
           ].isValidated()) ||
           this.refs[this.props.steps[this.state.currentStep].stepName]
@@ -236,74 +240,86 @@ class ReactWizard extends React.Component {
       }
     });
   }
+
+  renderComponent(prop) {
+    const { component, stepProps, stepName } = prop;
+    if (typeof component === 'function' || isForwardRefComponent(component)) {
+      return (
+        <prop.component
+            ref={stepName}
+            wizardData={this.state.wizardData}
+            {...stepProps}
+        />);
+    }
+
+    return (<div ref={stepName}>{component}</div>);
+  }
+
   render() {
     return (
       <div className="wizard-container" ref="wizard">
         <Card className="card card-wizard active" data-color={this.state.color}>
-          {this.props.title !== undefined ||
-          this.props.description !== undefined ? (
-            <CardHeader
-              className={
-                this.props.headerTextCenter !== undefined ? "text-center" : ""
-              }
-              data-background-color={this.state.color}
-            >
-              {this.props.title !== undefined ? (
-                <CardTitle tag="h3">{this.props.title}</CardTitle>
-              ) : null}
-              {this.props.description !== undefined ? (
-                <h3 className="description">{this.props.description}</h3>
-              ) : null}
-              <div className="wizard-navigation" ref="navStepsLi">
-                <div className="progress-with-circle">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={this.state.progressbarStyle}
-                  />
-                </div>
-                <Nav pills>
-                  {this.props.steps.map((prop, key) => {
-                    return (
-                      <NavItem key={key} style={{ width: this.state.width }}>
-                        <NavLink
-                          className={classnames(
-                            { active: key === this.state.currentStep },
-                            { checked: key <= this.state.highestStep }
-                          )}
-                          onClick={() => this.navigationStepChange(key)}
-                        >
-                          {prop.stepIcon !== undefined &&
-                          prop.stepIcon !== "" ? (
-                            <i className={prop.stepIcon} />
-                          ) : null}
-                          {this.props.progressbar ? (
-                            <p>{prop.stepName}</p>
-                          ) : (
-                            prop.stepName
-                          )}
-                        </NavLink>
-                      </NavItem>
-                    );
-                  })}
-                </Nav>
-                {this.props.progressbar ? null : (
-                  <div className="moving-tab" style={this.state.movingTabStyle}>
-                    {this.props.steps[this.state.currentStep].stepIcon !==
-                      undefined &&
-                    this.props.steps[this.state.currentStep].stepIcon !== "" ? (
-                      <i
-                        className={
-                          this.props.steps[this.state.currentStep].stepIcon
-                        }
-                      />
-                    ) : null}
-                    {this.props.steps[this.state.currentStep].stepName}
-                  </div>
-                )}
+          <CardHeader
+            className={
+              this.props.headerTextCenter !== undefined ? "text-center" : ""
+            }
+            data-background-color={this.state.color}
+          >
+            {this.props.title !== undefined ? (
+              <CardTitle tag="h3">{this.props.title}</CardTitle>
+            ) : null}
+            {this.props.description !== undefined ? (
+              <h3 className="description">{this.props.description}</h3>
+            ) : null}
+            <div className="wizard-navigation" ref="navStepsLi">
+              <div className="progress-with-circle">
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={this.state.progressbarStyle}
+                />
               </div>
-            </CardHeader>
-          ) : null}
+              <Nav pills>
+                {this.props.steps.map((prop, key) => {
+                  return (
+                    <NavItem key={key} style={{ width: this.state.width }}>
+                      <NavLink
+                        className={classnames(
+                          { active: key === this.state.currentStep },
+                          { checked: key <= this.state.highestStep }
+                        )}
+                        onClick={() => this.navigationStepChange(key)}
+                      >
+                        {prop.stepIcon !== undefined &&
+                        prop.stepIcon !== "" ? (
+                          <i className={prop.stepIcon} />
+                        ) : null}
+                        {this.props.progressbar ? (
+                          <p>{prop.stepName}</p>
+                        ) : (
+                          prop.stepName
+                        )}
+                      </NavLink>
+                    </NavItem>
+                  );
+                })}
+              </Nav>
+              {this.props.progressbar ? null : (
+                <div className="moving-tab" style={this.state.movingTabStyle}>
+                  {this.props.steps[this.state.currentStep].stepIcon !==
+                    undefined &&
+                  this.props.steps[this.state.currentStep].stepIcon !== "" ? (
+                    <i
+                      className={
+                        this.props.steps[this.state.currentStep].stepIcon
+                      }
+                    />
+                  ) : null}
+                  {this.props.steps[this.state.currentStep].stepName}
+                </div>
+              )}
+            </div>
+          </CardHeader>
           <CardBody>
             <TabContent activeTab={this.state.currentStep}>
               {this.props.steps.map((prop, key) => {
@@ -315,15 +331,7 @@ class ReactWizard extends React.Component {
                       show: this.state.currentStep === key
                     })}
                   >
-                    {typeof prop.component === "function" ? (
-                      <prop.component
-                        ref={prop.stepName}
-                        wizardData={this.state.wizardData}
-                        {...prop.stepProps}
-                      />
-                    ) : (
-                      <div ref={prop.stepName}>{prop.component}</div>
-                    )}
+                    {this.renderComponent(prop)}
                   </TabPane>
                 );
               })}
@@ -409,7 +417,11 @@ ReactWizard.propTypes = {
     PropTypes.shape({
       stepName: PropTypes.string.isRequired,
       stepIcon: PropTypes.string,
-      component: PropTypes.func.isRequired,
+      component: PropTypes.oneOfType([PropTypes.func, function (props, key, componentName, location, propFullName) {
+        if (!isForwardRefComponent(props.component)) {
+          return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Validation failed.`);
+        }
+      }]),
       stepProps: PropTypes.object
     })
   ).isRequired

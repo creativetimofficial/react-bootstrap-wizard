@@ -1,0 +1,753 @@
+/*!
+
+=========================================================
+* React Wizard - v0.0.5
+=========================================================
+
+* Copyright 2017 Creative Tim (http://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/react-wizard/blob/master/LICENSE.md)
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+.wizard-container .card-wizard {
+  min-height: 410px;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  -webkit-transition: all 300ms linear;
+  -moz-transition: all 300ms linear;
+  -o-transition: all 300ms linear;
+  -ms-transition: all 300ms linear;
+  transition: all 300ms linear; }
+  .wizard-container .card-wizard .card-header {
+    font-size: 14px;
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased; }
+  .wizard-container .card-wizard .wizard-navigation .moving-tab {
+    font-size: 14px;
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased; }
+  .wizard-container .card-wizard .card-footer {
+    font-size: 14px;
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased; }
+  .wizard-container .card-wizard .wizard-navigation .moving-tab {
+    font-size: 12px; }
+    .wizard-container .card-wizard .wizard-navigation .moving-tab i {
+      display: inline-block;
+      font-size: 19px;
+      line-height: initial;
+      margin-right: 6px;
+      padding: 0;
+      vertical-align: bottom; }
+  .wizard-container .card-wizard .wizard-navigation .nav.nav-pills .nav-item a {
+    margin-right: 0; }
+  .wizard-container .card-wizard.active {
+    opacity: 1; }
+  .wizard-container .card-wizard .nav-pills .nav-item .nav-link {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: transparent;
+    box-shadow: none; }
+    .wizard-container .card-wizard .nav-pills .nav-item .nav-link.active, .wizard-container .card-wizard .nav-pills .nav-item .nav-link:hover, .wizard-container .card-wizard .nav-pills .nav-item .nav-link:focus {
+      background-color: transparent;
+      box-shadow: none; }
+    .wizard-container .card-wizard .nav-pills .nav-item .nav-link.active:focus, .wizard-container .card-wizard .nav-pills .nav-item .nav-link.active:hover {
+      background-color: transparent;
+      box-shadow: none; }
+  .wizard-container .card-wizard .picture-container {
+    position: relative;
+    cursor: pointer;
+    text-align: center; }
+  .wizard-container .card-wizard .wizard-navigation {
+    position: relative; }
+  .wizard-container .card-wizard .moving-tab {
+    position: absolute;
+    text-align: center;
+    padding: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    -webkit-font-smoothing: subpixel-antialiased;
+    top: -4px;
+    left: 0;
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    color: #f96332;
+    cursor: pointer;
+    font-weight: 500; }
+
+.wizard-container [data-background-color="primary"] {
+  background-color: #f96332; }
+
+.wizard-container [data-background-color="green"] {
+  background-color: #18ce0f; }
+
+.wizard-container [data-background-color="blue"] {
+  background-color: #2CA8FF; }
+
+.wizard-container [data-background-color="orange"] {
+  background-color: #FFB236; }
+
+.wizard-container [data-background-color="red"] {
+  background-color: #FF3636; }
+
+.wizard-container [data-background-color="primary"] .moving-tab {
+  color: #f96332; }
+
+.wizard-container [data-background-color="green"] .moving-tab {
+  color: #18ce0f; }
+
+.wizard-container [data-background-color="blue"] .moving-tab {
+  color: #2CA8FF; }
+
+.wizard-container [data-background-color="orange"] .moving-tab {
+  color: #FFB236; }
+
+.wizard-container [data-background-color="red"] .moving-tab {
+  color: #FF3636; }
+
+.wizard-container .card-wizard .tab-content {
+  min-height: 355px;
+  padding: 20px 0; }
+
+.wizard-container .card-wizard .wizard-footer {
+  padding: 0 15px; }
+
+.wizard-container .card-wizard .disabled {
+  display: none; }
+
+.wizard-container .card-wizard .wizard-header {
+  text-align: center;
+  padding: 25px 0 35px; }
+  .wizard-container .card-wizard .wizard-header h5 {
+    margin: 5px 0 0; }
+
+.wizard-container .card-wizard .nav-pills > li {
+  text-align: center; }
+
+.wizard-container .card-wizard .btn {
+  text-transform: uppercase; }
+
+.wizard-container .card-wizard .info-text {
+  text-align: center;
+  font-weight: 300;
+  margin: 10px 0 30px; }
+
+.wizard-container .card-wizard .card-title {
+  font-size: 2em;
+  line-height: 1.4em;
+  font-weight: 400;
+  text-transform: none; }
+
+[data-background-color]:not([data-background-color=gray]) .description, [data-background-color]:not([data-background-color=gray]) .social-description p {
+  color: rgba(255, 255, 255, 0.8); }
+
+.wizard-container .card-wizard .card-title + .description {
+  font-size: 17px;
+  margin-bottom: 32px; }
+
+.wizard-container .card-wizard .wizard-title {
+  margin: 0; }
+
+.wizard-container .card-wizard .nav-pills {
+  background-color: inherit; }
+  .wizard-container .card-wizard .nav-pills > li + li {
+    margin-left: 0; }
+  .wizard-container .card-wizard .nav-pills > li > a {
+    border: 0 !important;
+    border-radius: 0;
+    line-height: 18px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 100px;
+    text-align: center; }
+  .wizard-container .card-wizard .nav-pills > li.active > a {
+    background-color: inherit;
+    box-shadow: none; }
+    .wizard-container .card-wizard .nav-pills > li.active > a:hover, .wizard-container .card-wizard .nav-pills > li.active > a:focus {
+      background-color: inherit;
+      box-shadow: none; }
+  .wizard-container .card-wizard .nav-pills > li > a:hover, .wizard-container .card-wizard .nav-pills > li > a:focus {
+    background-color: inherit;
+    box-shadow: none; }
+  .wizard-container .card-wizard .nav-pills > li i {
+    display: inline-block;
+    font-size: 19px;
+    line-height: initial;
+    margin-right: 6px;
+    padding: 0;
+    vertical-align: bottom; }
+
+.wizard-container .nav-pills.flex-column li > a {
+  margin-bottom: 15px; }
+
+.wizard-container .nav-pills:not(.nav-pills-icons):not(.nav-pills-just-icons) .nav-item .nav-link {
+  border-radius: 30px; }
+
+.wizard-container .nav-pills.nav-pills-just-icons .nav-item .nav-link {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  padding: 0;
+  max-width: 80px;
+  min-width: auto; }
+
+.wizard-container .nav-pills .nav-item:not(:last-child) .nav-link {
+  margin-right: 19px; }
+
+.wizard-container .nav-pills .nav-item .nav-link {
+  padding: 0 15.5px;
+  text-align: center;
+  padding: 11px 23px;
+  min-width: 100px;
+  font-weight: 400;
+  color: #444;
+  background-color: rgba(222, 222, 222, 0.3); }
+  .wizard-container .nav-pills .nav-item .nav-link:hover {
+    background-color: rgba(222, 222, 222, 0.3); }
+  .wizard-container .nav-pills .nav-item .nav-link.active {
+    background-color: #9A9A9A;
+    color: #FFFFFF;
+    box-shadow: 0px 5px 35px 0px rgba(0, 0, 0, 0.3); }
+    .wizard-container .nav-pills .nav-item .nav-link.active:focus, .wizard-container .nav-pills .nav-item .nav-link.active:hover {
+      background-color: #9A9A9A;
+      color: #FFFFFF;
+      box-shadow: 0px 5px 35px 0px rgba(0, 0, 0, 0.3); }
+  .wizard-container .nav-pills .nav-item .nav-link.disabled, .wizard-container .nav-pills .nav-item .nav-link:disabled, .wizard-container .nav-pills .nav-item .nav-link[disabled] {
+    opacity: .5; }
+
+.wizard-container .nav-pills.nav-pills-neutral .nav-item .nav-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF; }
+  .wizard-container .nav-pills.nav-pills-neutral .nav-item .nav-link.active {
+    background-color: #FFFFFF;
+    color: #f96332; }
+    .wizard-container .nav-pills.nav-pills-neutral .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-neutral .nav-item .nav-link.active:hover {
+      background-color: #FFFFFF;
+      color: #f96332; }
+
+.wizard-container .nav-pills.nav-pills-primary .nav-item .nav-link.active {
+  background-color: #f96332; }
+  .wizard-container .nav-pills.nav-pills-primary .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-primary .nav-item .nav-link.active:hover {
+    background-color: #f96332; }
+
+.wizard-container .nav-pills.nav-pills-info .nav-item .nav-link.active {
+  background-color: #2CA8FF; }
+  .wizard-container .nav-pills.nav-pills-info .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-info .nav-item .nav-link.active:hover {
+    background-color: #2CA8FF; }
+
+.wizard-container .nav-pills.nav-pills-success .nav-item .nav-link.active {
+  background-color: #18ce0f; }
+  .wizard-container .nav-pills.nav-pills-success .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-success .nav-item .nav-link.active:hover {
+    background-color: #18ce0f; }
+
+.wizard-container .nav-pills.nav-pills-warning .nav-item .nav-link.active {
+  background-color: #FFB236; }
+  .wizard-container .nav-pills.nav-pills-warning .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-warning .nav-item .nav-link.active:hover {
+    background-color: #FFB236; }
+
+.wizard-container .nav-pills.nav-pills-danger .nav-item .nav-link.active {
+  background-color: #FF3636; }
+  .wizard-container .nav-pills.nav-pills-danger .nav-item .nav-link.active:focus, .wizard-container .nav-pills.nav-pills-danger .nav-item .nav-link.active:hover {
+    background-color: #FF3636; }
+
+.wizard-container .tab-space {
+  padding: 20px 0 50px 0px; }
+
+.wizard-container .tab-content.tab-subcategories {
+  margin-top: 20px;
+  background-color: #FFFFFF;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2); }
+
+.wizard-container .card-wizard .btn:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn {
+  border-width: 2px;
+  font-weight: 400;
+  font-size: 0.8571em;
+  line-height: 1.35em;
+  border: none;
+  border-radius: 0.1875rem;
+  padding: 11px 22px;
+  cursor: pointer;
+  background-color: #888;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn:hover, .wizard-container .card-wizard .card-footer .btn:focus, .wizard-container .card-wizard .card-footer .btn:active, .wizard-container .card-wizard .card-footer .btn.active {
+    background-color: #979797;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn:active:focus, .wizard-container .card-wizard .card-footer .btn:active:hover {
+    background-color: #979797;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn.active:focus, .wizard-container .card-wizard .card-footer .btn.active:hover {
+    background-color: #979797;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn.disabled {
+    background-color: #888;
+    border-color: #888; }
+    .wizard-container .card-wizard .card-footer .btn.disabled:hover, .wizard-container .card-wizard .card-footer .btn.disabled:focus, .wizard-container .card-wizard .card-footer .btn.disabled.focus, .wizard-container .card-wizard .card-footer .btn.disabled:active, .wizard-container .card-wizard .card-footer .btn.disabled.active {
+      background-color: #888;
+      border-color: #888; }
+  .wizard-container .card-wizard .card-footer .btn:disabled {
+    background-color: #888;
+    border-color: #888; }
+    .wizard-container .card-wizard .card-footer .btn:disabled:hover, .wizard-container .card-wizard .card-footer .btn:disabled:focus, .wizard-container .card-wizard .card-footer .btn:disabled.focus, .wizard-container .card-wizard .card-footer .btn:disabled:active, .wizard-container .card-wizard .card-footer .btn:disabled.active {
+      background-color: #888;
+      border-color: #888; }
+  .wizard-container .card-wizard .card-footer .btn[disabled] {
+    background-color: #888;
+    border-color: #888; }
+    .wizard-container .card-wizard .card-footer .btn[disabled]:hover, .wizard-container .card-wizard .card-footer .btn[disabled]:focus, .wizard-container .card-wizard .card-footer .btn[disabled].focus, .wizard-container .card-wizard .card-footer .btn[disabled]:active, .wizard-container .card-wizard .card-footer .btn[disabled].active {
+      background-color: #888;
+      border-color: #888; }
+  .wizard-container .card-wizard .card-footer .btn.btn-simple {
+    color: #888;
+    border-color: #888; }
+    .wizard-container .card-wizard .card-footer .btn.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn.btn-simple:active {
+      background-color: transparent;
+      color: #979797;
+      border-color: #979797;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn.btn-link {
+    color: #888; }
+    .wizard-container .card-wizard .card-footer .btn.btn-link:hover, .wizard-container .card-wizard .card-footer .btn.btn-link:focus, .wizard-container .card-wizard .card-footer .btn.btn-link:active {
+      background-color: transparent;
+      color: #979797;
+      text-decoration: none;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn:hover, .wizard-container .card-wizard .card-footer .btn:focus {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    outline: 0 !important; }
+  .wizard-container .card-wizard .card-footer .btn:active, .wizard-container .card-wizard .card-footer .btn.active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: 0 !important; }
+
+.wizard-container .card-wizard .card-footer .btn-primary {
+  background-color: #f96332;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-primary:hover, .wizard-container .card-wizard .card-footer .btn-primary:focus, .wizard-container .card-wizard .card-footer .btn-primary:active, .wizard-container .card-wizard .card-footer .btn-primary.active {
+    background-color: #fa7a50;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-primary:active:focus, .wizard-container .card-wizard .card-footer .btn-primary:active:hover {
+    background-color: #fa7a50;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-primary.active:focus, .wizard-container .card-wizard .card-footer .btn-primary.active:hover {
+    background-color: #fa7a50;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-primary:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-primary.disabled {
+    background-color: #f96332;
+    border-color: #f96332; }
+    .wizard-container .card-wizard .card-footer .btn-primary.disabled:hover, .wizard-container .card-wizard .card-footer .btn-primary.disabled:focus, .wizard-container .card-wizard .card-footer .btn-primary.disabled.focus, .wizard-container .card-wizard .card-footer .btn-primary.disabled:active, .wizard-container .card-wizard .card-footer .btn-primary.disabled.active {
+      background-color: #f96332;
+      border-color: #f96332; }
+  .wizard-container .card-wizard .card-footer .btn-primary:disabled {
+    background-color: #f96332;
+    border-color: #f96332; }
+    .wizard-container .card-wizard .card-footer .btn-primary:disabled:hover, .wizard-container .card-wizard .card-footer .btn-primary:disabled:focus, .wizard-container .card-wizard .card-footer .btn-primary:disabled.focus, .wizard-container .card-wizard .card-footer .btn-primary:disabled:active, .wizard-container .card-wizard .card-footer .btn-primary:disabled.active {
+      background-color: #f96332;
+      border-color: #f96332; }
+  .wizard-container .card-wizard .card-footer .btn-primary[disabled] {
+    background-color: #f96332;
+    border-color: #f96332; }
+    .wizard-container .card-wizard .card-footer .btn-primary[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-primary[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-primary[disabled].focus, .wizard-container .card-wizard .card-footer .btn-primary[disabled]:active, .wizard-container .card-wizard .card-footer .btn-primary[disabled].active {
+      background-color: #f96332;
+      border-color: #f96332; }
+  .wizard-container .card-wizard .card-footer .btn-primary.btn-simple {
+    color: #f96332;
+    border-color: #f96332; }
+    .wizard-container .card-wizard .card-footer .btn-primary.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-primary.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-primary.btn-simple:active {
+      background-color: transparent;
+      color: #fa7a50;
+      border-color: #fa7a50;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-primary.btn-link {
+    color: #f96332; }
+    .wizard-container .card-wizard .card-footer .btn-primary.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-primary.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-primary.btn-link:active {
+      background-color: transparent;
+      color: #fa7a50;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn-success {
+  background-color: #18ce0f;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-success:hover, .wizard-container .card-wizard .card-footer .btn-success:focus, .wizard-container .card-wizard .card-footer .btn-success:active, .wizard-container .card-wizard .card-footer .btn-success.active {
+    background-color: #1beb11;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-success:active:focus, .wizard-container .card-wizard .card-footer .btn-success:active:hover {
+    background-color: #1beb11;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-success.active:focus, .wizard-container .card-wizard .card-footer .btn-success.active:hover {
+    background-color: #1beb11;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-success:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-success.disabled {
+    background-color: #18ce0f;
+    border-color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-success.disabled:hover, .wizard-container .card-wizard .card-footer .btn-success.disabled:focus, .wizard-container .card-wizard .card-footer .btn-success.disabled.focus, .wizard-container .card-wizard .card-footer .btn-success.disabled:active, .wizard-container .card-wizard .card-footer .btn-success.disabled.active {
+      background-color: #18ce0f;
+      border-color: #18ce0f; }
+  .wizard-container .card-wizard .card-footer .btn-success:disabled {
+    background-color: #18ce0f;
+    border-color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-success:disabled:hover, .wizard-container .card-wizard .card-footer .btn-success:disabled:focus, .wizard-container .card-wizard .card-footer .btn-success:disabled.focus, .wizard-container .card-wizard .card-footer .btn-success:disabled:active, .wizard-container .card-wizard .card-footer .btn-success:disabled.active {
+      background-color: #18ce0f;
+      border-color: #18ce0f; }
+  .wizard-container .card-wizard .card-footer .btn-success[disabled] {
+    background-color: #18ce0f;
+    border-color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-success[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-success[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-success[disabled].focus, .wizard-container .card-wizard .card-footer .btn-success[disabled]:active, .wizard-container .card-wizard .card-footer .btn-success[disabled].active {
+      background-color: #18ce0f;
+      border-color: #18ce0f; }
+  .wizard-container .card-wizard .card-footer .btn-success.btn-simple {
+    color: #18ce0f;
+    border-color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-success.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-success.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-success.btn-simple:active {
+      background-color: transparent;
+      color: #1beb11;
+      border-color: #1beb11;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-success.btn-link {
+    color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-success.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-success.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-success.btn-link:active {
+      background-color: transparent;
+      color: #1beb11;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn-info {
+  background-color: #2CA8FF;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-info:hover, .wizard-container .card-wizard .card-footer .btn-info:focus, .wizard-container .card-wizard .card-footer .btn-info:active, .wizard-container .card-wizard .card-footer .btn-info.active {
+    background-color: #4bb5ff;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-info:active:focus, .wizard-container .card-wizard .card-footer .btn-info:active:hover {
+    background-color: #4bb5ff;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-info.active:focus, .wizard-container .card-wizard .card-footer .btn-info.active:hover {
+    background-color: #4bb5ff;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-info:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-info.disabled {
+    background-color: #2CA8FF;
+    border-color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-info.disabled:hover, .wizard-container .card-wizard .card-footer .btn-info.disabled:focus, .wizard-container .card-wizard .card-footer .btn-info.disabled.focus, .wizard-container .card-wizard .card-footer .btn-info.disabled:active, .wizard-container .card-wizard .card-footer .btn-info.disabled.active {
+      background-color: #2CA8FF;
+      border-color: #2CA8FF; }
+  .wizard-container .card-wizard .card-footer .btn-info:disabled {
+    background-color: #2CA8FF;
+    border-color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-info:disabled:hover, .wizard-container .card-wizard .card-footer .btn-info:disabled:focus, .wizard-container .card-wizard .card-footer .btn-info:disabled.focus, .wizard-container .card-wizard .card-footer .btn-info:disabled:active, .wizard-container .card-wizard .card-footer .btn-info:disabled.active {
+      background-color: #2CA8FF;
+      border-color: #2CA8FF; }
+  .wizard-container .card-wizard .card-footer .btn-info[disabled] {
+    background-color: #2CA8FF;
+    border-color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-info[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-info[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-info[disabled].focus, .wizard-container .card-wizard .card-footer .btn-info[disabled]:active, .wizard-container .card-wizard .card-footer .btn-info[disabled].active {
+      background-color: #2CA8FF;
+      border-color: #2CA8FF; }
+  .wizard-container .card-wizard .card-footer .btn-info.btn-simple {
+    color: #2CA8FF;
+    border-color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-info.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-info.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-info.btn-simple:active {
+      background-color: transparent;
+      color: #4bb5ff;
+      border-color: #4bb5ff;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-info.btn-link {
+    color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-info.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-info.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-info.btn-link:active {
+      background-color: transparent;
+      color: #4bb5ff;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn-warning {
+  background-color: #FFB236;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-warning:hover, .wizard-container .card-wizard .card-footer .btn-warning:focus, .wizard-container .card-wizard .card-footer .btn-warning:active, .wizard-container .card-wizard .card-footer .btn-warning.active {
+    background-color: #ffbe55;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-warning:active:focus, .wizard-container .card-wizard .card-footer .btn-warning:active:hover {
+    background-color: #ffbe55;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-warning.active:focus, .wizard-container .card-wizard .card-footer .btn-warning.active:hover {
+    background-color: #ffbe55;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-warning:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-warning.disabled {
+    background-color: #FFB236;
+    border-color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-warning.disabled:hover, .wizard-container .card-wizard .card-footer .btn-warning.disabled:focus, .wizard-container .card-wizard .card-footer .btn-warning.disabled.focus, .wizard-container .card-wizard .card-footer .btn-warning.disabled:active, .wizard-container .card-wizard .card-footer .btn-warning.disabled.active {
+      background-color: #FFB236;
+      border-color: #FFB236; }
+  .wizard-container .card-wizard .card-footer .btn-warning:disabled {
+    background-color: #FFB236;
+    border-color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-warning:disabled:hover, .wizard-container .card-wizard .card-footer .btn-warning:disabled:focus, .wizard-container .card-wizard .card-footer .btn-warning:disabled.focus, .wizard-container .card-wizard .card-footer .btn-warning:disabled:active, .wizard-container .card-wizard .card-footer .btn-warning:disabled.active {
+      background-color: #FFB236;
+      border-color: #FFB236; }
+  .wizard-container .card-wizard .card-footer .btn-warning[disabled] {
+    background-color: #FFB236;
+    border-color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-warning[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-warning[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-warning[disabled].focus, .wizard-container .card-wizard .card-footer .btn-warning[disabled]:active, .wizard-container .card-wizard .card-footer .btn-warning[disabled].active {
+      background-color: #FFB236;
+      border-color: #FFB236; }
+  .wizard-container .card-wizard .card-footer .btn-warning.btn-simple {
+    color: #FFB236;
+    border-color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-warning.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-warning.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-warning.btn-simple:active {
+      background-color: transparent;
+      color: #ffbe55;
+      border-color: #ffbe55;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-warning.btn-link {
+    color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-warning.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-warning.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-warning.btn-link:active {
+      background-color: transparent;
+      color: #ffbe55;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn-danger {
+  background-color: #FF3636;
+  color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-danger:hover, .wizard-container .card-wizard .card-footer .btn-danger:focus, .wizard-container .card-wizard .card-footer .btn-danger:active, .wizard-container .card-wizard .card-footer .btn-danger.active {
+    background-color: #ff5555;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-danger:active:focus, .wizard-container .card-wizard .card-footer .btn-danger:active:hover {
+    background-color: #ff5555;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-danger.active:focus, .wizard-container .card-wizard .card-footer .btn-danger.active:hover {
+    background-color: #ff5555;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-danger:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-danger.disabled {
+    background-color: #FF3636;
+    border-color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-danger.disabled:hover, .wizard-container .card-wizard .card-footer .btn-danger.disabled:focus, .wizard-container .card-wizard .card-footer .btn-danger.disabled.focus, .wizard-container .card-wizard .card-footer .btn-danger.disabled:active, .wizard-container .card-wizard .card-footer .btn-danger.disabled.active {
+      background-color: #FF3636;
+      border-color: #FF3636; }
+  .wizard-container .card-wizard .card-footer .btn-danger:disabled {
+    background-color: #FF3636;
+    border-color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-danger:disabled:hover, .wizard-container .card-wizard .card-footer .btn-danger:disabled:focus, .wizard-container .card-wizard .card-footer .btn-danger:disabled.focus, .wizard-container .card-wizard .card-footer .btn-danger:disabled:active, .wizard-container .card-wizard .card-footer .btn-danger:disabled.active {
+      background-color: #FF3636;
+      border-color: #FF3636; }
+  .wizard-container .card-wizard .card-footer .btn-danger[disabled] {
+    background-color: #FF3636;
+    border-color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-danger[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-danger[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-danger[disabled].focus, .wizard-container .card-wizard .card-footer .btn-danger[disabled]:active, .wizard-container .card-wizard .card-footer .btn-danger[disabled].active {
+      background-color: #FF3636;
+      border-color: #FF3636; }
+  .wizard-container .card-wizard .card-footer .btn-danger.btn-simple {
+    color: #FF3636;
+    border-color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-danger.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-danger.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-danger.btn-simple:active {
+      background-color: transparent;
+      color: #ff5555;
+      border-color: #ff5555;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-danger.btn-link {
+    color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-danger.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-danger.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-danger.btn-link:active {
+      background-color: transparent;
+      color: #ff5555;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn-neutral {
+  background-color: #FFFFFF;
+  color: #f96332; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:hover, .wizard-container .card-wizard .card-footer .btn-neutral:focus, .wizard-container .card-wizard .card-footer .btn-neutral:active, .wizard-container .card-wizard .card-footer .btn-neutral.active {
+    background-color: #FFFFFF;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:active:focus, .wizard-container .card-wizard .card-footer .btn-neutral:active:hover {
+    background-color: #FFFFFF;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.active:focus, .wizard-container .card-wizard .card-footer .btn-neutral.active:hover {
+    background-color: #FFFFFF;
+    color: #FFFFFF;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:not([data-action]):hover {
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17); }
+  .wizard-container .card-wizard .card-footer .btn-neutral.disabled {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.disabled:hover, .wizard-container .card-wizard .card-footer .btn-neutral.disabled:focus, .wizard-container .card-wizard .card-footer .btn-neutral.disabled.focus, .wizard-container .card-wizard .card-footer .btn-neutral.disabled:active, .wizard-container .card-wizard .card-footer .btn-neutral.disabled.active {
+      background-color: #FFFFFF;
+      border-color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:disabled {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral:disabled:hover, .wizard-container .card-wizard .card-footer .btn-neutral:disabled:focus, .wizard-container .card-wizard .card-footer .btn-neutral:disabled.focus, .wizard-container .card-wizard .card-footer .btn-neutral:disabled:active, .wizard-container .card-wizard .card-footer .btn-neutral:disabled.active {
+      background-color: #FFFFFF;
+      border-color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-neutral[disabled] {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-neutral[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-neutral[disabled].focus, .wizard-container .card-wizard .card-footer .btn-neutral[disabled]:active, .wizard-container .card-wizard .card-footer .btn-neutral[disabled].active {
+      background-color: #FFFFFF;
+      border-color: #FFFFFF; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-danger {
+    color: #FF3636; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-danger:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-danger:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-danger:active {
+      color: #ff5555; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-info {
+    color: #2CA8FF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-info:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-info:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-info:active {
+      color: #4bb5ff; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-warning {
+    color: #FFB236; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-warning:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-warning:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-warning:active {
+      color: #ffbe55; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-success {
+    color: #18ce0f; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-success:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-success:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-success:active {
+      color: #1beb11; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-default {
+    color: #888; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-default:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-default:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-default:active {
+      color: #979797; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.active {
+    background-color: #FFFFFF;
+    color: #fa7a50;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:active {
+    background-color: #FFFFFF;
+    color: #fa7a50;
+    box-shadow: none; }
+    .wizard-container .card-wizard .card-footer .btn-neutral:active:focus, .wizard-container .card-wizard .card-footer .btn-neutral:active:hover {
+      background-color: #FFFFFF;
+      color: #fa7a50;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.active:focus, .wizard-container .card-wizard .card-footer .btn-neutral.active:hover {
+    background-color: #FFFFFF;
+    color: #fa7a50;
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:hover, .wizard-container .card-wizard .card-footer .btn-neutral:focus {
+    color: #fa7a50; }
+  .wizard-container .card-wizard .card-footer .btn-neutral:hover:not(.nav-link), .wizard-container .card-wizard .card-footer .btn-neutral:focus:not(.nav-link) {
+    box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-simple {
+    color: #FFFFFF;
+    border-color: #FFFFFF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-simple:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-simple:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-simple:active {
+      background-color: transparent;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      box-shadow: none; }
+  .wizard-container .card-wizard .card-footer .btn-neutral.btn-link {
+    color: #FFFFFF; }
+    .wizard-container .card-wizard .card-footer .btn-neutral.btn-link:hover, .wizard-container .card-wizard .card-footer .btn-neutral.btn-link:focus, .wizard-container .card-wizard .card-footer .btn-neutral.btn-link:active {
+      background-color: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      box-shadow: none; }
+
+.wizard-container .card-wizard .card-footer .btn:disabled, .wizard-container .card-wizard .card-footer .btn[disabled], .wizard-container .card-wizard .card-footer .btn.disabled {
+  opacity: 0.5;
+  filter: alpha(opacity=50); }
+
+.wizard-container .card-wizard .card-footer .btn-round {
+  border-width: 1px;
+  border-radius: 30px;
+  padding: 11px 23px; }
+  .wizard-container .card-wizard .card-footer .btn-round.btn-simple {
+    padding: 10px 22px; }
+
+.wizard-container .card-wizard .card-footer .btn-simple {
+  border: 1px solid;
+  border-color: #888;
+  padding: 10px 22px;
+  background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-simple.disabled {
+    background-color: transparent; }
+    .wizard-container .card-wizard .card-footer .btn-simple.disabled:hover, .wizard-container .card-wizard .card-footer .btn-simple.disabled:focus, .wizard-container .card-wizard .card-footer .btn-simple.disabled.focus, .wizard-container .card-wizard .card-footer .btn-simple.disabled:active, .wizard-container .card-wizard .card-footer .btn-simple.disabled.active {
+      background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-simple:disabled {
+    background-color: transparent; }
+    .wizard-container .card-wizard .card-footer .btn-simple:disabled:hover, .wizard-container .card-wizard .card-footer .btn-simple:disabled:focus, .wizard-container .card-wizard .card-footer .btn-simple:disabled.focus, .wizard-container .card-wizard .card-footer .btn-simple:disabled:active, .wizard-container .card-wizard .card-footer .btn-simple:disabled.active {
+      background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-simple[disabled] {
+    background-color: transparent; }
+    .wizard-container .card-wizard .card-footer .btn-simple[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-simple[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-simple[disabled].focus, .wizard-container .card-wizard .card-footer .btn-simple[disabled]:active, .wizard-container .card-wizard .card-footer .btn-simple[disabled].active {
+      background-color: transparent; }
+
+.wizard-container .card-wizard .card-footer .btn-link.disabled {
+  background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-link.disabled:hover, .wizard-container .card-wizard .card-footer .btn-link.disabled:focus, .wizard-container .card-wizard .card-footer .btn-link.disabled.focus, .wizard-container .card-wizard .card-footer .btn-link.disabled:active, .wizard-container .card-wizard .card-footer .btn-link.disabled.active {
+    background-color: transparent; }
+
+.wizard-container .card-wizard .card-footer .btn-link:disabled {
+  background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-link:disabled:hover, .wizard-container .card-wizard .card-footer .btn-link:disabled:focus, .wizard-container .card-wizard .card-footer .btn-link:disabled.focus, .wizard-container .card-wizard .card-footer .btn-link:disabled:active, .wizard-container .card-wizard .card-footer .btn-link:disabled.active {
+    background-color: transparent; }
+
+.wizard-container .card-wizard .card-footer .btn-link[disabled] {
+  background-color: transparent; }
+  .wizard-container .card-wizard .card-footer .btn-link[disabled]:hover, .wizard-container .card-wizard .card-footer .btn-link[disabled]:focus, .wizard-container .card-wizard .card-footer .btn-link[disabled].focus, .wizard-container .card-wizard .card-footer .btn-link[disabled]:active, .wizard-container .card-wizard .card-footer .btn-link[disabled].active {
+    background-color: transparent; }
+
+.wizard-container .card-wizard .card-footer .btn-lg {
+  font-size: 1em;
+  border-radius: 0.25rem;
+  padding: 15px 48px; }
+  .wizard-container .card-wizard .card-footer .btn-lg.btn-simple {
+    padding: 14px 47px; }
+
+.wizard-container .card-wizard .card-footer .btn-sm {
+  font-size: 14px;
+  border-radius: 0.1875rem;
+  padding: 5px 15px; }
+  .wizard-container .card-wizard .card-footer .btn-sm.btn-simple {
+    padding: 4px 14px; }
+
+.wizard-container .card-wizard .card-footer .btn-link {
+  border: 0;
+  padding: 0.5rem 0.7rem;
+  background-color: transparent; }
+
+.wizard-container .card-wizard .card-footer .btn-wd {
+  min-width: 140px; }
