@@ -15,6 +15,10 @@ import {
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
+const isForwardRefComponent = (component) => {
+  return typeof component === 'object' && component['$$typeof'] === Symbol.for('react.forward_ref')
+};
+
 class ReactWizard extends React.Component {
   constructor(props) {
     super(props);
@@ -236,6 +240,21 @@ class ReactWizard extends React.Component {
       }
     });
   }
+
+  renderComponent(prop) {
+    const { component, stepProps, stepName } = prop;
+    if (typeof component === 'function' || isForwardRefComponent(component)) {
+      return (
+        <prop.component
+            ref={stepName}
+            wizardData={this.state.wizardData}
+            {...stepProps}
+        />);
+    }
+
+    return (<div ref={stepName}>{component}</div>);
+  }
+
   render() {
     return (
       <div className="wizard-container" ref="wizard">
@@ -315,15 +334,7 @@ class ReactWizard extends React.Component {
                       show: this.state.currentStep === key
                     })}
                   >
-                    {typeof prop.component === "function" ? (
-                      <prop.component
-                        ref={prop.stepName}
-                        wizardData={this.state.wizardData}
-                        {...prop.stepProps}
-                      />
-                    ) : (
-                      <div ref={prop.stepName}>{prop.component}</div>
-                    )}
+                    {this.renderComponent(prop)}
                   </TabPane>
                 );
               })}
@@ -409,7 +420,11 @@ ReactWizard.propTypes = {
     PropTypes.shape({
       stepName: PropTypes.string.isRequired,
       stepIcon: PropTypes.string,
-      component: PropTypes.func.isRequired,
+      component: PropTypes.oneOfType([PropTypes.func, function (props, key, componentName, location, propFullName) {
+        if (!isForwardRefComponent(props.component)) {
+          return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Validation failed.`);
+        }
+      }]),
       stepProps: PropTypes.object
     })
   ).isRequired
