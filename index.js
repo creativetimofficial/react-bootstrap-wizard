@@ -79,14 +79,14 @@ class ReactWizard extends React.Component {
     !this.isCancelled &&
       setTimeout(() => this.refreshAnimation(this.state.currentStep), 200);
   }
-  navigationStepChange(key) {
+  async navigationStepChange(key) {
     if (this.props.navSteps) {
       var validationState = true;
       if (this.props.validate && key > this.state.currentStep) {
         for (var i = this.state.currentStep; i < key; i++) {
           if (
             this.refs[this.props.steps[i].stepName].isValidated !== undefined &&
-            this.refs[this.props.steps[i].stepName].isValidated() === false
+            await this.refs[this.props.steps[i].stepName].isValidated() === false
           ) {
             validationState = false;
             break;
@@ -112,12 +112,12 @@ class ReactWizard extends React.Component {
       }
     }
   }
-  nextButtonClick() {
+  async nextButtonClick() {
     if (
       (this.props.validate &&
         ((this.refs[this.props.steps[this.state.currentStep].stepName]
           .isValidated !== undefined &&
-          this.refs[
+          await this.refs[
             this.props.steps[this.state.currentStep].stepName
           ].isValidated()) ||
           this.refs[this.props.steps[this.state.currentStep].stepName]
@@ -163,14 +163,14 @@ class ReactWizard extends React.Component {
       this.refreshAnimation(key);
     }
   }
-  finishButtonClick() {
+  async finishButtonClick() {
     if (
       (this.props.validate === false &&
         this.props.finishButtonClick !== undefined) ||
       (this.props.validate &&
         ((this.refs[this.props.steps[this.state.currentStep].stepName]
           .isValidated !== undefined &&
-          this.refs[
+          await this.refs[
             this.props.steps[this.state.currentStep].stepName
           ].isValidated()) ||
           this.refs[this.props.steps[this.state.currentStep].stepName]
