@@ -124,7 +124,7 @@ var steps = [
     stepName: "Address",
     stepIcon: "tim-icons icon-delivery-fast",
     component: Step3,
-    stepProp: {
+    stepProps: {
       prop1: true,
       prop2: "A string"
     }
@@ -146,7 +146,7 @@ See the bellow example to see how to use it.
 function finishButtonClick(allStepStates)
 ```
 
-## Example code
+## Example code with Class Components
 
 ```
 import React from "react";
@@ -233,6 +233,127 @@ class WizardExample extends React.Component {
 }
 
 ReactDOM.render(<WizardExample />, document.getElementById("root"));
+```
+
+## Example code with Function Components
+
+### React.forwardRef
+
+Note, since this plugin relays on its children (the steps that you pass to it), to have a ref, so that it can access the `isValidated` function, you will need to make sure you forward a ref, thus, you will need the `React.forwardRef`.
+
+Check the bellow example to understand the issue better.
+
+### React.useImperativeHandle
+
+Note, since this plugin relays on its children (the steps that you pass to it), to have a ref, so that it can access the `isValidated` function, you will need to make sure that the wizard component will be able to access `this.refs.stepName.isValidated` (this is just an example), and that is why, we will need to use the `React.useImperativeHandle` to add a function here, named `isValidated` which will further call the `isValidated` function of the component, or we will set it to undefined. We also use it for retrieving the state of the component.
+
+Check the bellow example to understand the issue better.
+
+### isValidated inside React.useImperativeHandle
+
+We use this function, to let the parent component, the wizard, access the `isValidated` prop/function of its children.
+
+Check the bellow example to understand the issue better.
+
+### state inside React.useImperativeHandle
+
+We use this property, to let the parent component, the wizard, access the `state` of its children.
+
+Check the bellow example to understand the issue better.
+
+### Example
+
+```
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactWizard from "views/forms/ReactWizard.js";
+import { Container, Row, Col } from "reactstrap";
+
+import "bootstrap/dist/css/bootstrap.css";
+
+const FirstStep = React.forwardRef((props, ref) => {
+  const [randomState, setRandomState] = React.useState(
+    "1. This is a random state for first step."
+  );
+  React.useImperativeHandle(ref, () => ({
+    isValidated: undefined,
+    state: {
+      randomState,
+    },
+  }));
+  return <div>Hey from First</div>;
+});
+
+const SecondStep = React.forwardRef((props, ref) => {
+  const [randomState, setRandomState] = React.useState(
+    "2. This is a random state for second step."
+  );
+  const isValidated = () => {
+    // do some validations
+    // decide if you will
+    return true;
+    // or you will
+    // return false;
+  };
+  React.useImperativeHandle(ref, () => ({
+    isValidated: () => {
+      return isValidated();
+    },
+    state: {
+      randomState,
+    },
+  }));
+  return <div>Hey from Second</div>;
+});
+
+const ThirdStep = React.forwardRef((props, ref) => {
+  const [randomState, setRandomState] = React.useState(
+    "3. This is a random state for third step."
+  );
+  React.useImperativeHandle(ref, () => ({
+    isValidated: undefined,
+    state: {
+      randomState,
+    },
+  }));
+  return <div>Hey from Third</div>;
+});
+
+var steps = [
+  // this step hasn't got a isValidated() function, so it will be considered to be true
+  { stepName: "First", component: FirstStep },
+  // this step will be validated to false
+  { stepName: "Second", component: SecondStep },
+  // this step will never be reachable because of the seconds isValidated() steps function that will always return false
+  { stepName: "Third", component: ThirdStep },
+];
+
+function WizardExample() {
+  const finishButtonClick = (allStates) => {
+    console.log(allStates);
+  };
+  return (
+    <Container fluid style={{ marginTop: "15px" }}>
+      <Row>
+        <Col xs={12} md={6} className="mr-auto ml-auto">
+          <ReactWizard
+            steps={steps}
+            navSteps
+            title="react-wizard"
+            description="This will help you split a complicated flow or a complicated form in multiple steps."
+            headerTextCenter
+            validate
+            color="primary"
+            finishButtonClick={finishButtonClick}
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+ReactDOM.render(<WizardExample />, document.getElementById("root"));
+
 ```
 
 ## Styles
