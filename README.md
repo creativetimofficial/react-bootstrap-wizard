@@ -259,5 +259,5 @@ npm install --save bootstrap
 [CHANGELOG]: ./CHANGELOG.md
 
 [LICENSE]: ./LICENSE.md
-[version-badge]: https://img.shields.io/badge/version-0.0.7-blue.svg
+[version-badge]: https://img.shields.io/badge/version-0.0.9-blue.svg
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
